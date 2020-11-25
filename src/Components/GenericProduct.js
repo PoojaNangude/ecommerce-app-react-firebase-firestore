@@ -9,7 +9,7 @@ const GenericProduct =({image, name, price},props) =>{
   <article className='product'>
     <img src={image} height={height} width={width} alt="" />
     <div className="App">
-    <h1>{name}</h1>
+    <h3>{name}</h3>
     <h4>${price}</h4>
     </div>
     </article>
