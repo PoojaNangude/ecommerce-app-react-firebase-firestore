@@ -35,3 +35,4 @@ const GenericProduct =({id,image, name, price}) =>{
 };
 
 export default GenericProduct
+
