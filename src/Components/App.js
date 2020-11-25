@@ -7,6 +7,7 @@ import Navbar from "./Bootstrap_header";
 function App() {
   return (
     <div>
+      <h1>In new branch</h1>
       <Navbar />
     </div>
   );
