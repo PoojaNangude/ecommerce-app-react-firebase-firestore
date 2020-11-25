@@ -1,6 +1,7 @@
 import React from 'react'
 import products from '../Constants/products';
 import '../index.css';
+// import GenericProduct from './GenericProduct';
 import GenericProduct from './GenericProduct';
 
 const RandomProducts = () => {

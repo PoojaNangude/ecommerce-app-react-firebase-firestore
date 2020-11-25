@@ -8,14 +8,11 @@ import './App.css';
 const Carousel = () => {
     const settings = {
         dots: true,
-        infinite: true,
-        speed: 100,
         slidesToShow: 1,
         arrows: true,
         autoplay: true,
         autoplaySpeed: 2000,
         centerMode:true,
-        slidesToScroll: 1
     };
 
 

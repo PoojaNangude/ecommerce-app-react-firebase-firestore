@@ -1,6 +1,5 @@
 import React from 'react'
 import Carousel from './Carousel';
-import GenericProduct from './GenericProduct';
 import RandomProducts from './RandomProducts';
 import './App.css';
 
