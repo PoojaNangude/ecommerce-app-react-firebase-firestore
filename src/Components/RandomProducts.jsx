@@ -3,6 +3,7 @@ import products from '../Constants/products';
 import '../index.css';
 // import GenericProduct from './GenericProduct';
 import GenericProduct from './GenericProduct';
+import Products from './Products';
 
 const RandomProducts = () => {
     return (

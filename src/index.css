@@ -33,6 +33,10 @@ code {
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .product {
   background: #fff;
   border-radius: 1rem;

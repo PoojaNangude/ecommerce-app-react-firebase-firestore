@@ -40,15 +40,15 @@ const Nice_Header = () => {
             </ul>
           </Nav>
           <Nav className="mr-auto">
-            <Nav.Link>
+            
               <Link to="/">Home</Link>
-            </Nav.Link>
-            <Nav.Link>
+            
+            
               <Link to="/cart">Cart</Link>
-            </Nav.Link>
-            <Nav.Link>
+            
+            
               <Link to="/wishlist">Wishlist</Link>
-            </Nav.Link>
+            
           </Nav>
           <Form inline>
             <Button variant="outline-primary" onClick={Login}>
