@@ -1,9 +1,7 @@
 import React from 'react'
 import products from '../Constants/products';
 import '../index.css';
-// import GenericProduct from './GenericProduct';
-import GenericProduct from './GenericProduct';
-import Products from './Products';
+import ProductCards from './ProductCards';
 
 const RandomProducts = () => {
     return (
@@ -11,7 +9,7 @@ const RandomProducts = () => {
             <h1 className="App">Some of our Products</h1>
                 <div className="productlist">
                     {products.slice(0,6).map((product) => {
-                        return <GenericProduct key={product.id} {...product}></GenericProduct>; 
+                        return <ProductCards key={product.id} {...product}></ProductCards>; 
             })}
                 </div>
         </div>
