@@ -1,13 +1,15 @@
 import React from "react";
+
 import "./App.css";
 //import Navbar from "./Header";
-import Navbar from "./Bootstrap_header";
+import Header from "./Header";
 //import Sidebar from "./Sidebar";
+//import Category from "./Category";
 
 function App() {
   return (
     <div>
-      <Navbar />
+      <Header />
     </div>
   );
 }
