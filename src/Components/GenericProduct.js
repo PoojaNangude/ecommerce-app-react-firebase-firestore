@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.css';
 import '../index.css';
 import Products from './Products';
@@ -7,15 +7,18 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-ro
 const handleSubmit = (id) =>{
   console.log(id);
 
-  return(
-    <div>
-      <Router>
-        <Switch>
-        <Route path="/product"><Products/></Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+  // return <Redirect  to="/products" />
+    // <div>
+      
+      {/* <Router> */}
+        
+          {/* <Route exact path="/products/:id" render={(props) => <Products  {...props} /> } /> */}
+        {/* <Route path="/products"><Products/></Route> */}
+        {/* <Route exact path="/products/:id" render={(props) => <Products  {...props} /> } />
+        
+      </Router> */}
+    {/* </div> */}
+  // );
 }
 
 const GenericProduct =({id,image, name, price}) =>{
@@ -23,13 +26,13 @@ const GenericProduct =({id,image, name, price}) =>{
     let width="300px";
   return (
     <div className="clickable">
-      <article className='product' onClick={()=>handleSubmit(id)}>
-      <img src={image} height={height} width={width} alt="" />
-      <div className="App">
-      <h3>{name}</h3>
-      <h4>${price}</h4>
-      </div>
-      </article>
+          <article className='product' onClick={()=>handleSubmit(id)}>
+          <img src={image} height={height} width={width} alt="" />
+          <div className="App">
+          <h3>{name}</h3>
+          <h4>${price}</h4>
+          </div>
+          </article>
     </div>
   );
 };
