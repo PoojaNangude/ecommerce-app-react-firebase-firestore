@@ -23,7 +23,13 @@ const Category = (props) => {
       <ListGroupItem>
         <CardDeck>
           {sub_type_a.map((e) => {
-            return <ProductCards key={e.id} {...e}></ProductCards>;
+            return (
+              <ProductCards
+                key={e.id}
+                loggedIn={props.loggedIn}
+                {...e}
+              ></ProductCards>
+            );
           })}
         </CardDeck>
       </ListGroupItem>
@@ -34,7 +40,13 @@ const Category = (props) => {
       <ListGroupItem>
         <CardDeck>
           {sub_type_b.map((e) => {
-            return <ProductCards key={e.id} {...e}></ProductCards>;
+            return (
+              <ProductCards
+                key={e.id}
+                loggedIn={props.loggedIn}
+                {...e}
+              ></ProductCards>
+            );
           })}
         </CardDeck>
       </ListGroupItem>

@@ -4,13 +4,17 @@ import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import products from "../Constants/products";
+import users from "../Constants/users";
+import { useHistory } from "react-router-dom";
 
 const Products = (props) => {
-  console.log(props.match.params.id);
+  const history = useHistory();
+
   let id = props.match.params.id;
-  console.log("id", id, "type:", typeof id);
+
   let m = products.find((x) => x.id.toString() === id);
-  console.log(m);
+
+  let userid = props.match.params.userid;
 
   return (
     <div className="App">
@@ -21,7 +25,27 @@ const Products = (props) => {
               <Image src={m.image} height="450px" width="450px" rounded />
             </Row>
             <Row>
-              <Button variant="primary">Add to Wishlist</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (userid.toString() === "0") {
+                    history.push("/login");
+                  } else {
+                    let user = users.find(
+                      (x) => x.id.toString() === userid.toString()
+                    );
+                    if (user.wishlist.includes(id)) {
+                      alert("Item already exists in wishlist.");
+                    } else {
+                      user.wishlist.push(id);
+
+                      alert("Product added to wishlist.");
+                    }
+                  }
+                }}
+              >
+                Add to Wishlist
+              </Button>
             </Row>
           </Col>
 
@@ -46,7 +70,18 @@ const Products = (props) => {
 
             <Row>
               <Button variant="primary">Add to Cart</Button>
-              <Button variant="primary">Proceed to Buy</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (userid.toString() === "0") {
+                    history.push("/login");
+                  } else {
+                    history.push(`/purchase/` + id);
+                  }
+                }}
+              >
+                Proceed to Buy
+              </Button>
             </Row>
           </Col>
         </Row>
