@@ -2,8 +2,8 @@ const products = [
   {
     id: 1,
     image:
-      "https://images-eu.ssl-images-amazon.com/images/I/81s6DUyQCZL._AC_UL200_SR200,200_.jpg",
-    name: "Thinking like a Monk",
+      "https://images-na.ssl-images-amazon.com/images/I/417+Cq07wML._SX355_BO1,204,203,200_.jpg",
+    name: "Perks of being a wall flower",
     price: 20.3,
     description:
       "In this inspiring, empowering book, Shetty draws on his time as a monk in the Vedic tradition to show us how we can clear the roadblocks to our potential and power. Drawing on ancient wisdom and his own rich experiences in the ashram, “Think Like a Monk” reveals how to overcome negative thoughts and habits, and access the calm and purpose that lie within all of us.",

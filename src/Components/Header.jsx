@@ -5,16 +5,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import Home from "./Home";
-import Cart from "./Cart";
-import Wishlist from "./WishList";
-import Login from "../Common/Login";
-import Category from "./Category";
-import products from "../Constants/products";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import Routes from "./Routes";
 
 const Header = () => {
-  const [productList, setProductList] = useState([]);
+  const [loggedIn, setLoggedIn] = useState({ status: false, userid: 0 });
 
   return (
     <>
@@ -34,50 +29,33 @@ const Header = () => {
             </Nav.Link>
 
             <DropdownButton id="dropdown-basic-button" title="Categories">
-              <Dropdown.Item
-                as={Link}
-                to="/category"
-                onClick={() => {
-                  let arr = [];
-                  arr.push(
-                    products.filter((book) => book.category === "books")
-                  );
-                  setProductList(arr);
-                }}
-              >
+              <Dropdown.Item as={Link} to="/category/books">
                 Books
               </Dropdown.Item>
-              <Dropdown.Item
-                as={Link}
-                to="/category"
-                onClick={() => {
-                  let arr = [];
-                  arr.push(
-                    products.filter((phone) => phone.category === "phone")
-                  );
-
-                  setProductList(arr);
-                }}
-              >
+              <Dropdown.Item as={Link} to="/category/mobiles">
                 Mobile
               </Dropdown.Item>
             </DropdownButton>
           </Nav>
           <Form inline>
-            <Button variant="outline-primary" onClick={Login}>
-              Login
-            </Button>
+            {/* <Nav.Link as={Link} to="/login">
+              <Button variant="outline-primary">Login</Button>
+            </Nav.Link> */}
+
+            {!loggedIn.status && (
+              <Button variant="outline-primary" as={Link} to="/login">
+                Login
+              </Button>
+            )}
+
+            {loggedIn.status && (
+              <Button variant="outline-primary" as={Link} to="/logout">
+                Logout
+              </Button>
+            )}
           </Form>
         </Navbar>
-        <Switch>
-          <Route path="/category" exact>
-            <Category list={productList}></Category>
-          </Route>
-          <Route path="/wishlist" component={Wishlist}></Route>
-          <Route path="/cart" component={Cart}></Route>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/" component={Home}></Route>
-        </Switch>
+        <Routes loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       </Router>
     </>
   );
