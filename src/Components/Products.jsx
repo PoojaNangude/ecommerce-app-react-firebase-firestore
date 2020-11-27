@@ -4,6 +4,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import products from "../Constants/products";
+import AddToCart from './AddToCart';
 
 const Products = (props) => {
   console.log(props.match.params.id);
@@ -11,6 +12,7 @@ const Products = (props) => {
   console.log("id", id, "type:", typeof id);
   let m = products.find((x) => x.id.toString() === id);
   console.log(m);
+  // console.log(props.match.params.loggedIn);
 
   return (
     <div className="App">
@@ -33,7 +35,7 @@ const Products = (props) => {
               <h3>${m.price}</h3>
             </Row>
             <Row>
-              <Card style={{ height: "20rem", width: "28rem" }}>
+              <Card style={{ height: "23rem", width: "30rem" }}>
                 <Card.Body>
                   <Card.Title>Description</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
@@ -45,7 +47,7 @@ const Products = (props) => {
             </Row>
 
             <Row>
-              <Button variant="primary">Add to Cart</Button>
+              <Button variant="primary" onClick={AddToCart}>Add to Cart</Button>
               <Button variant="primary">Proceed to Buy</Button>
             </Row>
           </Col>

@@ -7,6 +7,7 @@ import Login from "../Common/Login";
 import Category from "./Category";
 import Products from "./Products";
 import Logout from "../Common/Logout";
+import AddToCart from './AddToCart';
 
 const Routes = (props) => {
   return (
@@ -26,13 +27,19 @@ const Routes = (props) => {
         ></Login>
       </Route>
       <Route exact path="/logout">
-        <Logout
-          loggedIn={props.loggedIn}
-          setLoggedIn={props.setLoggedIn}
+        <Logout loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn}
         ></Logout>
       </Route>
+
+      <Route exact path="/addtocart">
+        <AddToCart
+          loggedIn={props.loggedIn}
+          setLoggedIn={props.setLoggedIn}>
+        </AddToCart>
+      </Route>
+
       {/* <Route path="/products" component={Products}></Route> */}
-      <Route exact path="/products/:id" component={Products} /> ;
+      <Route exact path="/products/:id" component={Products} /> 
       <Route exact path="/" component={Home}></Route>
     </Switch>
   );
