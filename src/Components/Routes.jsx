@@ -27,19 +27,22 @@ const Routes = (props) => {
         ></Login>
       </Route>
       <Route exact path="/logout">
-        <Logout loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn}
+        <Logout loggedIn={props.loggedIn} 
+        setLoggedIn={props.setLoggedIn}
         ></Logout>
       </Route>
 
-      <Route exact path="/addtocart">
+      {/* <Route exact path="/addtocart">
         <AddToCart
           loggedIn={props.loggedIn}
-          setLoggedIn={props.setLoggedIn}>
-        </AddToCart>
-      </Route>
+          setLoggedIn={props.setLoggedIn}
+          ></AddToCart>
+            {console.log(props.loggedIn)}
+
+      </Route> */}
 
       {/* <Route path="/products" component={Products}></Route> */}
-      <Route exact path="/products/:id" component={Products} /> 
+      <Route exact path="/products/:id" component={Products}></Route>
       <Route exact path="/" component={Home}></Route>
     </Switch>
   );

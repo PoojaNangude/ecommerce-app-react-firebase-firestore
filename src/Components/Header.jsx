@@ -10,7 +10,7 @@ import Routes from "./Routes";
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState({ status: false, userid: 0 });
-
+  console.log(loggedIn);
   return (
     <>
       <Router>

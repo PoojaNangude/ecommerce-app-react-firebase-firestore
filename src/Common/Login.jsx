@@ -18,6 +18,7 @@ const Login = (props) => {
         history.push("/");
       }
     }
+    console.log(props.loggedIn);
   };
 
   return (

@@ -4,7 +4,6 @@ import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import products from "../Constants/products";
-import AddToCart from './AddToCart';
 
 const Products = (props) => {
   console.log(props.match.params.id);
@@ -12,7 +11,10 @@ const Products = (props) => {
   console.log("id", id, "type:", typeof id);
   let m = products.find((x) => x.id.toString() === id);
   console.log(m);
-  // console.log(props.match.params.loggedIn);
+  
+  const AddToCart = () =>{
+    alert('hi');
+  }
 
   return (
     <div className="App">
