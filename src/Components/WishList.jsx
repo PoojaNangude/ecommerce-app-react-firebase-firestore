@@ -4,13 +4,12 @@ import products from "../Constants/products";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Image from "react-bootstrap/Image";
-import { Redirect } from "react-router-dom";
 
 const Wishlist = (props) => {
   let id = props.loggedIn.userid;
 
   if (id === 0) {
-    return <Redirect to="/login"></Redirect>;
+    return <h1>You are not logged in!!!</h1>;
   } else {
     let user = users.filter((user) => user.id === id);
 
