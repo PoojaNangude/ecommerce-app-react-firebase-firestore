@@ -3,7 +3,7 @@ const users = [
     id: 1,
     username: "kirti",
     password: "kirti",
-    cart: [1,3,6],
+    cart: [],
     wishlist: [],
   },
   {

@@ -15,10 +15,10 @@ const Login = (props) => {
     for (let user of users) {
       if (username === user.username && password === user.password) {
         props.setLoggedIn({ status: true, userid: user.id });
+
         history.push("/");
       }
     }
-    console.log(props.loggedIn);
   };
 
   return (
