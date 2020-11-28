@@ -10,12 +10,12 @@ import Routes from "./Routes";
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState({ status: false, userid: 0 });
-  console.log(loggedIn);
+
   return (
     <>
       <Router>
         <Navbar bg="light" variant="light">
-          <Navbar.Brand>eCommerce App</Navbar.Brand>
+          <Navbar.Brand as={Link} to='/'>eCommerce App</Navbar.Brand>
 
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">
