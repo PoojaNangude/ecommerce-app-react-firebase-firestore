@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import products from "../Constants/products";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
+// import AddToCart from '../Containers/AddToCart';
 
 const Products = (props) => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const Products = (props) => {
 
   let userid = props.match.params.userid;
 
-  const AddtoCart = () =>{
+  const AddToCart = () =>{
     if (userid.toString() === "0") {
       history.push({
         pathname:"/login",
@@ -109,7 +110,7 @@ const Products = (props) => {
             <Row>
               <Col md={3}>
               <Button variant="primary"
-                onClick={() => AddtoCart()}>Add to Cart</Button>
+                onClick={() => AddToCart()}>Add to Cart</Button>
               </Col>
               <Col md={5}>
               <Button

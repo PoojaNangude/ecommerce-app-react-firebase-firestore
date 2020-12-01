@@ -24,7 +24,7 @@ const Login = (props) => {
           history.push(`/purchase/` + location.pid);
         }
         else{
-          history.push("/");
+          history.goBack();
         }
       }
     }
