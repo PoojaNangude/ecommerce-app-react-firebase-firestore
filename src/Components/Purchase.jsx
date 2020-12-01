@@ -1,5 +1,5 @@
 import React from "react";
-import products from "../Constants/products";
+import products from "../Constants/products.jsx";
 import Image from "react-bootstrap/Image";
 import Button from 'react-bootstrap/Button';
 

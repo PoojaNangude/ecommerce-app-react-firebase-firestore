@@ -3,7 +3,7 @@ import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import products from "../Constants/products";
+import products from "../Constants/products.jsx";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
 // import AddToCart from '../Containers/AddToCart';

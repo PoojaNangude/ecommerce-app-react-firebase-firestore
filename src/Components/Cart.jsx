@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import users from "../Constants/users";
-import products from "../Constants/products";
+import products from "../Constants/products.jsx";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
