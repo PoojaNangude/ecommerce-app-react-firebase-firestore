@@ -7,7 +7,7 @@ const ProductCards = ({ id, image, name, price, loggedIn }) => {
 
   return (
     <div className="col-lg-3 col-md-2 col-sm-12">
-      <Card border="primary" style={{ width: "15rem"}}>
+      <Card border="primary" style={{ width: "15rem", height: "23rem" }}>
         <Card.Header>{name}</Card.Header>
         <Card.Img variant="top" src={image} height="200" width="200" />
         <Card.Body>

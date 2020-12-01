@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import users from "../Constants/users";
 
 const Login = (props) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const location = useLocation();
 
   const submitForm = (e) => {
     e.preventDefault();
+    console.log(location.pathname);
+    console.log(location.redirect);
+    console.log(location.pid);
 
     for (let user of users) {
       if (username === user.username && password === user.password) {
         props.setLoggedIn({ status: true, userid: user.id });
-
-        history.push("/");
+        if (location.redirect === "products") {
+          console.log("in if");
+          history.push(`/products/` + location.pid + `/` + user.id);
+        } else {
+          history.goBack();
+        }
       }
     }
   };

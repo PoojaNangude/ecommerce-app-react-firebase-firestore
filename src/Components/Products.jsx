@@ -29,7 +29,11 @@ const Products = (props) => {
                 variant="primary"
                 onClick={() => {
                   if (userid.toString() === "0") {
-                    history.push("/login");
+                    history.push({
+                      pathname: "/login",
+                      redirect: "products",
+                      pid: id,
+                    });
                   } else {
                     let user = users.find(
                       (x) => x.id.toString() === userid.toString()
@@ -44,7 +48,6 @@ const Products = (props) => {
                   }
                 }}
               >
-                
                 Add to Wishlist
               </Button>
             </Row>
@@ -71,38 +74,49 @@ const Products = (props) => {
 
             <Row>
               <Col md={3}>
-              <Button variant="primary"
-                onClick={() => {
-                  if (userid.toString() === "0") {
-                    history.push("/login");
-                  } else {
-                    let user = users.find(
-                      (x) => x.id.toString() === userid.toString()
-                    );
-                    if (user.cart.includes(id)) {
-                      alert("Item already exists in cart.");
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    if (userid.toString() === "0") {
+                      history.push({
+                        pathname: "/login",
+                        redirect: "products",
+                        pid: id,
+                      });
                     } else {
-                      user.cart.push(id);
-                      console.log(user.cart);
-                      alert("Product added to cart.");
+                      let user = users.find(
+                        (x) => x.id.toString() === userid.toString()
+                      );
+                      if (user.cart.includes(id)) {
+                        alert("Item already exists in cart.");
+                      } else {
+                        user.cart.push(id);
+                        console.log(user.cart);
+                        alert("Product added to cart.");
+                      }
                     }
-                  }
-                }}
-              >Add to Cart</Button>
+                  }}
+                >
+                  Add to Cart
+                </Button>
               </Col>
               <Col md={5}>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  if (userid.toString() === "0") {
-                    history.push("/login");
-                  } else {
-                    history.push(`/purchase/` + id);
-                  }
-                }}
-              >
-                Proceed to Buy
-              </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    if (userid.toString() === "0") {
+                      history.push({
+                        pathname: "/login",
+                        redirect: "products",
+                        pid: id,
+                      });
+                    } else {
+                      history.push(`/purchase/` + id);
+                    }
+                  }}
+                >
+                  Proceed to Buy
+                </Button>
               </Col>
             </Row>
           </Col>

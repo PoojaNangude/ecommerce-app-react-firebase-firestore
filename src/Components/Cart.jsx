@@ -1,47 +1,64 @@
-import React,{useState,useEffect} from 'react'
-import users from '../Constants/users';
-import products from '../Constants/products';
-import ListGroup from 'react-bootstrap/ListGroup';
+import React, { useState, useEffect } from "react";
+import users from "../Constants/users";
+import products from "../Constants/products";
+import ListGroup from "react-bootstrap/ListGroup";
 import { Container, Col, Row, Button } from "react-bootstrap";
-import Image from 'react-bootstrap/Image';
-import { Redirect } from "react-router-dom";
+import Image from "react-bootstrap/Image";
+import { useHistory } from "react-router-dom";
 
 const Cart = (props) => {
-  const [total,setTotal]=useState(0);
+  //const [total, setTotal] = useState(0);
+  const history = useHistory();
   let id = props.loggedIn.userid;
-  let sum=0;
+  let sum = 0;
+  let items = [];
+
+  useEffect(() =>
+    setTimeout(() => {
+      if (id === 0) {
+        history.push("/login");
+      }
+    }, 2000)
+  );
 
   if (id === 0) {
-    return <Redirect to="/login"></Redirect>;
+    return <h1>You are not logged in. Redirecting to Login ...</h1>;
   } else {
     let user = users.filter((user) => user.id === id);
 
-    let items = [];
-    for (let item of user[0].cart) {
-      items.push(
-        products.filter((prod) => prod.id.toString() === item.toString())
-      );
-    }
+    if (user[0].cart.length === 0) {
+      return <h1>Your Cart is empty.</h1>;
+    } else {
+      for (let item of user[0].cart) {
+        items.push(
+          products.filter((prod) => prod.id.toString() === item.toString())
+        );
+      }
 
-    for(let rec of items){
-      sum=sum+rec[0].price;
-      console.log(sum);
+      for (let rec of items) {
+        sum = sum + rec[0].price;
+        console.log(sum);
+      }
     }
-
 
     return (
       <div>
         <h1>Your Cart</h1>
         <ListGroup>
-        {items.map((item) => {
-          return (
-            <div  key={item[0].id}>
+          {items.map((item) => {
+            return (
+              <div key={item[0].id}>
                 <ListGroup.Item>
                   <Container>
                     <Row>
                       <Col md={3}>
                         <Row>
-                          <Image src={item[0].image} height="150px" width="150px" rounded />
+                          <Image
+                            src={item[0].image}
+                            height="150px"
+                            width="150px"
+                            rounded
+                          />
                         </Row>
                       </Col>
 
@@ -54,31 +71,26 @@ const Cart = (props) => {
                       <Col>
                         <Row>
                           <h6>${item[0].price}</h6>
-                          
                         </Row>
                       </Col>
-
                     </Row>
                   </Container>
                 </ListGroup.Item>
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
         </ListGroup>
         <Row>
           <Col md={6}>
-            <h1>
-              Total : {sum}
-            </h1>
+            <h1>Total : {sum}</h1>
           </Col>
           <Col md={6}>
             <Button>Proceed to Buy All</Button>
           </Col>
         </Row>
-
       </div>
     );
   }
-}
+};
 
-export default Cart
+export default Cart;

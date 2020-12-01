@@ -1,24 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import users from "../Constants/users";
 import products from "../Constants/products";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Image from "react-bootstrap/Image";
+import { useHistory } from "react-router-dom";
 
 const Wishlist = (props) => {
   let id = props.loggedIn.userid;
+  let items = [];
+  const history = useHistory();
+
+  useEffect(() =>
+    setTimeout(() => {
+      if (id === 0) {
+        history.push("/login");
+      }
+    }, 2000)
+  );
 
   if (id === 0) {
-    return <h1>You are not logged in!!!</h1>;
+    return <h1>You are not logged in. Redirecting to Login ...</h1>;
   } else {
     let user = users.filter((user) => user.id === id);
 
-    let items = [];
-    for (let item of user[0].wishlist) {
-      items.push(
-        products.filter((prod) => prod.id.toString() === item.toString())
-      );
+    if (user[0].wishlist.length === 0) {
+      return <h1>Your Wishlist is empty.</h1>;
+    } else {
+      for (let item of user[0].wishlist) {
+        items.push(
+          products.filter((prod) => prod.id.toString() === item.toString())
+        );
+      }
     }
+
     return (
       <div className="container">
         <h1>Your Wishlist</h1>
