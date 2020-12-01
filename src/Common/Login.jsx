@@ -12,16 +12,13 @@ const Login = (props) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(location.pathname);
-    console.log(location.redirect);
-    console.log(location.pid);
-
     for (let user of users) {
       if (username === user.username && password === user.password) {
         props.setLoggedIn({ status: true, userid: user.id });
         if (location.redirect === "products") {
-          console.log("in if");
           history.push(`/products/` + location.pid + `/` + user.id);
+        } else if (location.redirect === "buy") {
+          history.push(`/purchase/` + location.pid);
         } else {
           history.goBack();
         }

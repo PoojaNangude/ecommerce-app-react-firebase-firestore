@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import products from "../Constants/products";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
+// import AddToCart from '../Containers/AddToCart';
 
 const Products = (props) => {
   const history = useHistory();
@@ -16,6 +17,55 @@ const Products = (props) => {
 
   let userid = props.match.params.userid;
 
+  const AddToCart = () => {
+    if (userid.toString() === "0") {
+      history.push({
+        pathname: "/login",
+        redirect: "products",
+        pid: id,
+      });
+    } else {
+      let user = users.find((x) => x.id.toString() === userid.toString());
+      if (user.cart.includes(id)) {
+        alert("Item already exists in cart.");
+      } else {
+        user.cart.push(id);
+        console.log(user.cart);
+        alert("Product added to cart.");
+      }
+    }
+  };
+
+  const AddToWishlist = () => {
+    if (userid.toString() === "0") {
+      history.push({
+        pathname: "/login",
+        redirect: "products",
+        pid: id,
+      });
+    } else {
+      let user = users.find((x) => x.id.toString() === userid.toString());
+      if (user.wishlist.includes(id)) {
+        alert("Item already exists in wishlist.");
+      } else {
+        user.wishlist.push(id);
+        alert("Product added to wishlist.");
+      }
+    }
+  };
+
+  const Buy = () => {
+    if (userid.toString() === "0") {
+      history.push({
+        pathname: "/login",
+        redirect: "buy",
+        pid: id,
+      });
+    } else {
+      history.push(`/purchase/` + id);
+    }
+  };
+
   return (
     <div className="App">
       <Container>
@@ -25,29 +75,7 @@ const Products = (props) => {
               <Image src={m.image} height="450px" width="450px" rounded />
             </Row>
             <Row>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  if (userid.toString() === "0") {
-                    history.push({
-                      pathname: "/login",
-                      redirect: "products",
-                      pid: id,
-                    });
-                  } else {
-                    let user = users.find(
-                      (x) => x.id.toString() === userid.toString()
-                    );
-                    if (user.wishlist.includes(id)) {
-                      alert("Item already exists in wishlist.");
-                    } else {
-                      user.wishlist.push(id);
-
-                      alert("Product added to wishlist.");
-                    }
-                  }
-                }}
-              >
+              <Button variant="primary" onClick={() => AddToWishlist()}>
                 Add to Wishlist
               </Button>
             </Row>
@@ -74,47 +102,12 @@ const Products = (props) => {
 
             <Row>
               <Col md={3}>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    if (userid.toString() === "0") {
-                      history.push({
-                        pathname: "/login",
-                        redirect: "products",
-                        pid: id,
-                      });
-                    } else {
-                      let user = users.find(
-                        (x) => x.id.toString() === userid.toString()
-                      );
-                      if (user.cart.includes(id)) {
-                        alert("Item already exists in cart.");
-                      } else {
-                        user.cart.push(id);
-                        console.log(user.cart);
-                        alert("Product added to cart.");
-                      }
-                    }
-                  }}
-                >
+                <Button variant="primary" onClick={() => AddToCart()}>
                   Add to Cart
                 </Button>
               </Col>
               <Col md={5}>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    if (userid.toString() === "0") {
-                      history.push({
-                        pathname: "/login",
-                        redirect: "products",
-                        pid: id,
-                      });
-                    } else {
-                      history.push(`/purchase/` + id);
-                    }
-                  }}
-                >
+                <Button variant="primary" onClick={() => Buy()}>
                   Proceed to Buy
                 </Button>
               </Col>
