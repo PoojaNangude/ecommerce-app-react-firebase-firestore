@@ -5,9 +5,11 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { Container, Col, Row, Button } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
 import { Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Cart = (props) => {
   const [total,setTotal]=useState(0);
+  const history = useHistory();
   let id = props.loggedIn.userid;
   let sum=0;
 

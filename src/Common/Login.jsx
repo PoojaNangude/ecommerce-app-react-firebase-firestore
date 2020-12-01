@@ -3,20 +3,29 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
 import users from "../Constants/users";
+import { useLocation } from "react-router-dom";
 
 const Login = (props) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
-
+  const location = useLocation();
+  
   const submitForm = (e) => {
     e.preventDefault();
-
     for (let user of users) {
       if (username === user.username && password === user.password) {
         props.setLoggedIn({ status: true, userid: user.id });
-
-        history.push("/");
+        if(location.redirect === "products"){
+          history.push(`/products/` + location.pid + `/`+ user.id);
+        }
+        else
+        if(location.redirect ==="buy"){
+          history.push(`/purchase/` + location.pid);
+        }
+        else{
+          history.push("/");
+        }
       }
     }
   };

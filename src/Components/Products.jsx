@@ -16,6 +16,60 @@ const Products = (props) => {
 
   let userid = props.match.params.userid;
 
+  const AddtoCart = () =>{
+    if (userid.toString() === "0") {
+      history.push({
+        pathname:"/login",
+          redirect:"products",
+            pid:id
+          });
+      } else {
+        let user = users.find(
+          (x) => x.id.toString() === userid.toString()
+        );
+        if (user.cart.includes(id)) {
+          alert("Item already exists in cart.");
+      } else {
+          user.cart.push(id);
+          console.log(user.cart);
+          alert("Product added to cart.");
+        }
+    }
+  }
+
+  const AddToWishlist = () =>{
+    if (userid.toString() === "0") {
+      history.push({
+        pathname:"/login",
+        redirect:"products",
+        pid:id
+    });
+  } else {
+      let user = users.find(
+      (x) => x.id.toString() === userid.toString()
+      );
+      if (user.wishlist.includes(id)) {
+        alert("Item already exists in wishlist.");
+      } else {
+        user.wishlist.push(id);
+        alert("Product added to wishlist.");
+       }
+    }
+  }
+
+  const Buy = () =>{
+
+    if (userid.toString() === "0") {
+      history.push({
+        pathname:"/login",
+        redirect:"buy",
+        pid:id
+      });
+    } else {
+      history.push(`/purchase/` + id);
+    }
+  }
+
   return (
     <div className="App">
       <Container>
@@ -27,24 +81,7 @@ const Products = (props) => {
             <Row>
               <Button
                 variant="primary"
-                onClick={() => {
-                  if (userid.toString() === "0") {
-                    history.push("/login");
-                  } else {
-                    let user = users.find(
-                      (x) => x.id.toString() === userid.toString()
-                    );
-                    if (user.wishlist.includes(id)) {
-                      alert("Item already exists in wishlist.");
-                    } else {
-                      user.wishlist.push(id);
-
-                      alert("Product added to wishlist.");
-                    }
-                  }
-                }}
-              >
-                
+                onClick={() => AddToWishlist()}>
                 Add to Wishlist
               </Button>
             </Row>
@@ -59,7 +96,7 @@ const Products = (props) => {
             </Row>
             <Row>
               <Card style={{ height: "23rem", width: "35rem" }}>
-                <Card.Body>
+                <Card.Body >
                   <Card.Title>Description</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
                     {m.category}/{m.subcategory}
@@ -72,35 +109,12 @@ const Products = (props) => {
             <Row>
               <Col md={3}>
               <Button variant="primary"
-                onClick={() => {
-                  if (userid.toString() === "0") {
-                    history.push("/login");
-                  } else {
-                    let user = users.find(
-                      (x) => x.id.toString() === userid.toString()
-                    );
-                    if (user.cart.includes(id)) {
-                      alert("Item already exists in cart.");
-                    } else {
-                      user.cart.push(id);
-                      console.log(user.cart);
-                      alert("Product added to cart.");
-                    }
-                  }
-                }}
-              >Add to Cart</Button>
+                onClick={() => AddtoCart()}>Add to Cart</Button>
               </Col>
               <Col md={5}>
               <Button
                 variant="primary"
-                onClick={() => {
-                  if (userid.toString() === "0") {
-                    history.push("/login");
-                  } else {
-                    history.push(`/purchase/` + id);
-                  }
-                }}
-              >
+                onClick={() => Buy()}>
                 Proceed to Buy
               </Button>
               </Col>
