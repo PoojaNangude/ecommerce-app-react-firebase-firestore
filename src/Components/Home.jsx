@@ -2,18 +2,15 @@ import React,{useState, useEffect} from "react";
 import Carousel from "./Carousel";
 import "./App.css";
 import ProductCards from './ProductCards';
-import firebase from '../firebase';
+import { fetchProducts } from "../Services/Service.firebase";
 
 const RandomProducts = (props) => {
   const [products,setProducts] = useState([]);
   
-  useEffect(()=>{
-    const fetchData = async () =>{
-      const db = firebase.firestore();
-      const data = await db.collection("products").get();
-      setProducts(data.docs.map(doc => doc.data()));
-    }
-    fetchData();
+  useEffect( async ()=>{
+    let products = await fetchProducts();
+    setProducts(products);
+    console.log(products); 
   },[])
 
   return (

@@ -3,7 +3,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
 import './App.css';
-import firebase from '../firebase';
+import { fetchDeals, fetchProducts } from "../Services/Service.firebase";
+
 
 const Carousel = () => {
     const settings = {
@@ -16,15 +17,11 @@ const Carousel = () => {
     };
 
     const [deals,setDeals]=useState([]);
-    useEffect(()=>{
-        const fetchData = async () =>{
-        const db = firebase.firestore();
-        const data = await db.collection("deals").get();
-        setDeals(data.docs.map(doc => doc.data()));
-        }
-        fetchData();
+    useEffect( async ()=>{
+        let deals = await fetchDeals();
+        setDeals(deals);
+        console.log(deals); 
     },[])
-    console.log(deals);
     return (
         <div>
             <h1 className="App">WELCOME!!!</h1>
