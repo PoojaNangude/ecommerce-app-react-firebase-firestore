@@ -15,7 +15,7 @@ const RandomProducts = (props) => {
     }
     fetchData();
   },[])
-  console.log(products);
+
   return (
     <div>
       <h1 className="App">Some of our Products</h1>
