@@ -20,7 +20,7 @@ const Carousel = () => {
     useEffect( async ()=>{
         let deals = await fetchDeals();
         setDeals(deals);
-        console.log(deals); 
+        // console.log(deals); 
     },[])
     return (
         <div>

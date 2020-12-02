@@ -6,11 +6,13 @@ import { fetchProducts } from "../Services/Service.firebase";
 
 const RandomProducts = (props) => {
   const [products,setProducts] = useState([]);
-  
   useEffect( async ()=>{
-    let products = await fetchProducts();
+    let myPromise = new Promise(function(myResolve, myReject){
+      myResolve(fetchProducts())
+    })
+    let products = await myPromise;
     setProducts(products);
-    console.log(products); 
+    console.log(products);
   },[])
 
   return (
