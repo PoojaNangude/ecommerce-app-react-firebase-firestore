@@ -18,9 +18,12 @@ const Carousel = () => {
 
     const [deals,setDeals]=useState([]);
     useEffect( async ()=>{
-        let deals = await fetchDeals();
-        setDeals(deals);
-        // console.log(deals); 
+    let myPromise = new Promise(function(myResolve, myReject){
+      myResolve(fetchDeals())
+    })
+    let deals = await myPromise;
+    setDeals(deals);
+    console.log(deals);
     },[])
     return (
         <div>

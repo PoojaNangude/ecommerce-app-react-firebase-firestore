@@ -1,20 +1,31 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import products from "../Constants/products.jsx";
+// import products from "../Constants/products.jsx";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
-// import AddToCart from '../Containers/AddToCart';
+import { fetchProducts } from "../Services/Service.firebase";
+import GetProducts from './GetProducts';
 
 const Products = (props) => {
+  const [products,setProducts] = useState([]);
+  // let k =GetProducts()
+  // console.log(k)
+
+  useEffect( async ()=>{
+    let myPromise = new Promise(function(myResolve, myReject){
+      myResolve(fetchProducts())
+    })
+    let products = await myPromise;
+    setProducts(products);
+    // console.log(products);
+  },[])
+
   const history = useHistory();
-
   let id = props.match.params.id;
-
   let m = products.find((x) => x.id.toString() === id);
-
   let userid = props.match.params.userid;
 
   const AddToCart = () => {

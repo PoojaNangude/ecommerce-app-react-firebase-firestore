@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import users from "../Constants/users";
+// import users from "../Constants/users";
+import { fetchUsers } from "../Services/Service.firebase";
+
 
 const Login = (props) => {
-  const [username, setUserName] = useState("kirti");
-  const [password, setPassword] = useState("kirti");
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [users,setUsers] = useState([]);
   const history = useHistory();
   const location = useLocation();
+  console.log(fetchUsers())
+  useEffect( async ()=>{
+    let myPromise = new Promise(function(myResolve, myReject){
+      myResolve(fetchUsers())
+    })
+    let usrs = await myPromise;
+    setUsers(usrs);
+  },[])
 
   const submitForm = (e) => {
     e.preventDefault();
