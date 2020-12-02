@@ -24,7 +24,7 @@ const Carousel = () => {
                 {deals.map((deal) => {
                     return(
                         <div key={deal.id}>
-                            <img width="1300" height="450"  src={deal.url}/>
+                            <img width="1300" height="450"  src={deal.url} alt="NA"/>
                         </div>
                     );
                 })}
