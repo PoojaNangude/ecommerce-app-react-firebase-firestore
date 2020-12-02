@@ -8,6 +8,7 @@ import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
 import { fetchProducts } from "../Services/Service.firebase";
 import GetProducts from './GetProducts';
+import ProductCards from './ProductCards';
 
 const Products = (props) => {
   const [products,setProducts] = useState([]);
@@ -20,14 +21,16 @@ const Products = (props) => {
     })
     let products = await myPromise;
     setProducts(products);
-    // console.log(products);
   },[])
 
   const history = useHistory();
   let id = props.match.params.id;
-  let m = products.find((x) => x.id.toString() === id);
-  let userid = props.match.params.userid;
+  console.log(id);
+  let m = products.find((x) => x.id.toString() === id.toString());
+  console.log(m);
 
+  let userid = props.match.params.userid;
+  console.log(userid);
   const AddToCart = () => {
     if (userid.toString() === "0") {
       history.push({
@@ -79,7 +82,7 @@ const Products = (props) => {
 
   return (
     <div className="App">
-      <Container>
+      {/* <Container>
         <Row>
           <Col md={6}>
             <Row>
@@ -125,7 +128,7 @@ const Products = (props) => {
             </Row>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </div>
   );
 };
