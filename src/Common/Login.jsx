@@ -5,8 +5,8 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import users from "../Constants/users";
 
 const Login = (props) => {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUserName] = useState("kirti");
+  const [password, setPassword] = useState("kirti");
   const history = useHistory();
   const location = useLocation();
 
