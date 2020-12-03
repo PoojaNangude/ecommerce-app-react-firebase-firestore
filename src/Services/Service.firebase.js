@@ -1,9 +1,22 @@
-import firebase from "../Components/Firebase/firebase";
+import firebase from "../firebase";
 
-export const fetchData = async () => {
+export const fetchProducts = async () => {
   const db = firebase.firestore();
   const data = await db.collection("products").get();
-  let parsed_data = data.docs.map((doc) => doc.data());
+  const s = data.docs.map((doc) => doc.data());
+  return s;
+};
 
-  return parsed_data;
+export const fetchUsers = async () => {
+  const db = firebase.firestore();
+  const data = await db.collection("users").get();
+  const s = data.docs.map((doc) => doc.data());
+  return s;
+};
+
+export const fetchDeals = async () => {
+  const db = firebase.firestore();
+  const data = await db.collection("deals").get();
+  const s = data.docs.map((doc) => doc.data());
+  return s;
 };

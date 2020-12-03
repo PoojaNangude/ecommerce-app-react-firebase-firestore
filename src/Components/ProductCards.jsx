@@ -4,7 +4,6 @@ import { Link, useHistory } from "react-router-dom";
 
 const ProductCards = ({ id, image, name, price, loggedIn }) => {
   let history = useHistory();
-
   const Buy = () => {
     if (loggedIn.userid === 0) {
       history.push({

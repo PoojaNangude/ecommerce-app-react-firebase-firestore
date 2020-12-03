@@ -1,7 +1,7 @@
 import React from "react";
 import products from "../Constants/products";
 import Image from "react-bootstrap/Image";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 const Purchase = (props) => {
   const id = props.match.params.id;

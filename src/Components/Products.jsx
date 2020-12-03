@@ -1,21 +1,27 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import products from "../Constants/products";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
-// import AddToCart from '../Containers/AddToCart';
+import { fetchProducts } from "../Services/Service.firebase";
 
 const Products = (props) => {
+  const [products,setProducts] = useState([]);
   const history = useHistory();
-
   let id = props.match.params.id;
-
-  let m = products.find((x) => x.id.toString() === id);
-
+  let m = products.find((x) => x.id.toString() === id.toString());
   let userid = props.match.params.userid;
+
+    useEffect( async ()=>{
+    let myPromise = new Promise(function(myResolve, myReject){
+      myResolve(fetchProducts())
+    })
+    let prod = await myPromise;
+    setProducts(prod);
+    
+  },[])
 
   const AddToCart = () => {
     if (userid.toString() === "0") {
@@ -67,12 +73,14 @@ const Products = (props) => {
   };
 
   return (
+    
     <div className="App">
+      {typeof(m)!=='undefined' &&
       <Container>
         <Row>
           <Col md={6}>
             <Row>
-              <Image src={m.image} height="450px" width="450px" rounded />
+                <Image src={m.image} height="450px" width="450px" rounded />
             </Row>
             <Row>
               <Button variant="primary" onClick={() => AddToWishlist()}>
@@ -115,6 +123,7 @@ const Products = (props) => {
           </Col>
         </Row>
       </Container>
+}
     </div>
   );
 };

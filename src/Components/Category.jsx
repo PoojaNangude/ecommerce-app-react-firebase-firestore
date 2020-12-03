@@ -3,7 +3,7 @@ import CardDeck from "react-bootstrap/CardDeck";
 import ProductCards from "./ProductCards";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
-import { fetchData } from "../Services/Service.firebase";
+import { fetchProducts } from "../Services/Service.firebase";
 import Spinner from "react-bootstrap/Spinner";
 
 const Category = (props) => {
@@ -14,7 +14,7 @@ const Category = (props) => {
   const [sub_type_b, setSub_type_b] = useState([]);
 
   useEffect(() => {
-    fetchData()
+    fetchProducts()
       .then((prod) => setProducts(prod))
       .catch((err) => console.log(err));
   }, []);
