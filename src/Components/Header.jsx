@@ -3,8 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import Routes from "./Routes";
 
@@ -15,7 +14,9 @@ const Header = () => {
     <>
       <Router>
         <Navbar bg="light" variant="light">
-          <Navbar.Brand as={Link} to='/'>eCommerce App</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            eCommerce App
+          </Navbar.Brand>
 
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">
@@ -28,20 +29,16 @@ const Header = () => {
               Wishlist
             </Nav.Link>
 
-            <DropdownButton id="dropdown-basic-button" title="Categories">
-              <Dropdown.Item as={Link} to="/category/books">
+            <NavDropdown title="Categories" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/category/books">
                 Books
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/category/mobiles">
-                Mobile
-              </Dropdown.Item>
-            </DropdownButton>
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/mobiles">
+                Mobiles
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           <Form inline>
-            {/* <Nav.Link as={Link} to="/login">
-              <Button variant="outline-primary">Login</Button>
-            </Nav.Link> */}
-
             {!loggedIn.status && (
               <Button variant="outline-primary" as={Link} to="/login">
                 Login

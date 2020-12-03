@@ -1,8 +1,8 @@
 import React from "react";
 import Carousel from "./Carousel";
 import "./App.css";
-import products from '../Constants/products';
-import ProductCards from './ProductCards';
+import products from "../Constants/products";
+import ProductCards from "./ProductCards";
 
 const RandomProducts = (props) => {
   return (

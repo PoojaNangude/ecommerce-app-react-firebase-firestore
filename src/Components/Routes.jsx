@@ -24,8 +24,6 @@ const Routes = (props) => {
       <Route exact path="/cart">
         <Cart loggedIn={props.loggedIn}></Cart>
       </Route>
-
-      {/* <Route exact path="/cart" component={Cart}></Route> */}
       <Route exact path="/login">
         <Login
           loggedIn={props.loggedIn}
@@ -38,7 +36,6 @@ const Routes = (props) => {
           setLoggedIn={props.setLoggedIn}
         ></Logout>
       </Route>
-      {/* <Route path="/products" component={Products}></Route> */}
       <Route exact path="/products/:id/:userid" component={Products} /> ;
       <Route exact path="/purchase/:id" component={Purchase} /> ;
       <Route exact path="/">
