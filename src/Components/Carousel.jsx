@@ -23,7 +23,7 @@ const Carousel = () => {
     })
     let deals = await myPromise;
     setDeals(deals);
-    console.log(deals);
+    // console.log(deals);
     },[])
     return (
         <div>

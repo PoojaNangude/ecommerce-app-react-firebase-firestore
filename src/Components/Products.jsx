@@ -12,17 +12,6 @@ import ProductCards from './ProductCards';
 
 const Products = (props) => {
   const [products,setProducts] = useState([]);
-  // let k =GetProducts()
-  // console.log(k)
-
-  useEffect( async ()=>{
-    let myPromise = new Promise(function(myResolve, myReject){
-      myResolve(fetchProducts())
-    })
-    let products = await myPromise;
-    setProducts(products);
-  },[])
-
   const history = useHistory();
   let id = props.match.params.id;
   console.log(id);
@@ -31,6 +20,18 @@ const Products = (props) => {
 
   let userid = props.match.params.userid;
   console.log(userid);
+
+
+
+    useEffect( async ()=>{
+    let myPromise = new Promise(function(myResolve, myReject){
+      myResolve(fetchProducts())
+    })
+    let prod = await myPromise;
+    setProducts(prod);
+    
+  },[])
+
   const AddToCart = () => {
     if (userid.toString() === "0") {
       history.push({
@@ -81,12 +82,14 @@ const Products = (props) => {
   };
 
   return (
+    
     <div className="App">
-      {/* <Container>
+      {typeof(m)!=='undefined' &&
+      <Container>
         <Row>
           <Col md={6}>
             <Row>
-              <Image src={m.image} height="450px" width="450px" rounded />
+                <Image src={m.image} height="450px" width="450px" rounded />
             </Row>
             <Row>
               <Button variant="primary" onClick={() => AddToWishlist()}>
@@ -128,7 +131,8 @@ const Products = (props) => {
             </Row>
           </Col>
         </Row>
-      </Container> */}
+      </Container>
+}
     </div>
   );
 };
