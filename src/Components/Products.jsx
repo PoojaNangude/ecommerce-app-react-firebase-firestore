@@ -3,25 +3,16 @@ import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-// import products from "../Constants/products.jsx";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
 import { fetchProducts } from "../Services/Service.firebase";
-import GetProducts from './GetProducts';
-import ProductCards from './ProductCards';
 
 const Products = (props) => {
   const [products,setProducts] = useState([]);
   const history = useHistory();
   let id = props.match.params.id;
-  console.log(id);
   let m = products.find((x) => x.id.toString() === id.toString());
-  console.log(m);
-
   let userid = props.match.params.userid;
-  console.log(userid);
-
-
 
     useEffect( async ()=>{
     let myPromise = new Promise(function(myResolve, myReject){
