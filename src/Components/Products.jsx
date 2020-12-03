@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
@@ -8,20 +8,22 @@ import { useHistory } from "react-router-dom";
 import { fetchProducts } from "../Services/Service.firebase";
 
 const Products = (props) => {
-  const [products,setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setfilteredProducts] = useState([]);
   const history = useHistory();
   let id = props.match.params.id;
-  let m = products.find((x) => x.id.toString() === id.toString());
+
   let userid = props.match.params.userid;
 
-    useEffect( async ()=>{
-    let myPromise = new Promise(function(myResolve, myReject){
-      myResolve(fetchProducts())
-    })
+  useEffect(async () => {
+    let myPromise = new Promise(function (myResolve, myReject) {
+      myResolve(fetchProducts());
+    });
     let prod = await myPromise;
     setProducts(prod);
-    
-  },[])
+    prod = prod.find((x) => x.id.toString() === id.toString());
+    setfilteredProducts(prod);
+  }, []);
 
   const AddToCart = () => {
     if (userid.toString() === "0") {
@@ -73,57 +75,61 @@ const Products = (props) => {
   };
 
   return (
-    
     <div className="App">
-      {typeof(m)!=='undefined' &&
-      <Container>
-        <Row>
-          <Col md={6}>
-            <Row>
-                <Image src={m.image} height="450px" width="450px" rounded />
-            </Row>
-            <Row>
-              <Button variant="primary" onClick={() => AddToWishlist()}>
-                Add to Wishlist
-              </Button>
-            </Row>
-          </Col>
-
-          <Col md={6}>
-            <Row>
-              <h1>{m.name}</h1>
-            </Row>
-            <Row>
-              <h3>${m.price}</h3>
-            </Row>
-            <Row>
-              <Card style={{ height: "23rem", width: "35rem" }}>
-                <Card.Body>
-                  <Card.Title>Description</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {m.category}/{m.subcategory}
-                  </Card.Subtitle>
-                  <Card.Text>{m.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Row>
-
-            <Row>
-              <Col md={3}>
-                <Button variant="primary" onClick={() => AddToCart()}>
-                  Add to Cart
+      {filteredProducts && (
+        <Container>
+          <Row>
+            <Col md={6}>
+              <Row>
+                <Image
+                  src={filteredProducts.image}
+                  height="450px"
+                  width="450px"
+                  rounded
+                />
+              </Row>
+              <Row>
+                <Button variant="primary" onClick={() => AddToWishlist()}>
+                  Add to Wishlist
                 </Button>
-              </Col>
-              <Col md={5}>
-                <Button variant="primary" onClick={() => Buy()}>
-                  Proceed to Buy
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-}
+              </Row>
+            </Col>
+
+            <Col md={6}>
+              <Row>
+                <h1>{filteredProducts.name}</h1>
+              </Row>
+              <Row>
+                <h3>${filteredProducts.price}</h3>
+              </Row>
+              <Row>
+                <Card style={{ height: "23rem", width: "35rem" }}>
+                  <Card.Body>
+                    <Card.Title>Description</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      {filteredProducts.category}/{filteredProducts.subcategory}
+                    </Card.Subtitle>
+                    <Card.Text>{filteredProducts.description}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Row>
+
+              <Row>
+                <Col md={3}>
+                  <Button variant="primary" onClick={() => AddToCart()}>
+                    Add to Cart
+                  </Button>
+                </Col>
+                <Col md={5}>
+                  <Button variant="primary" onClick={() => Buy()}>
+                    Proceed to Buy
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      )}
     </div>
   );
 };

@@ -1,12 +1,14 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Header from "./Header";
+import AuthProvider from "./AuthProvider";
 
 function App() {
-
   return (
     <div>
-      <Header />
+      <AuthProvider>
+        <Header />
+      </AuthProvider>
     </div>
   );
 }
