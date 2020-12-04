@@ -13,7 +13,6 @@ const RandomProducts = (props) => {
     });
     let products = await myPromise;
     setProducts(products);
-    // console.log(products);
   }, []);
 
   return (

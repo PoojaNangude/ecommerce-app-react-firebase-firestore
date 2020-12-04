@@ -3,13 +3,12 @@ import React, { useEffect } from "react";
 export const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
-  const [users, setUsers] = React.useState([]);
-  const [products, setProducts] = React.useState([]);
-
-  useEffect(() => setUsers(null));
-
+  const [userId, setUsers] = React.useState(0);
+  const updateUserId = (user) => {
+    setUsers(user);
+  };
   return (
-    <AuthContext.Provider value={{ users, setUsers }}>
+    <AuthContext.Provider value={{ userId, updateUserId }}>
       {children}
     </AuthContext.Provider>
   );
