@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import Card from "react-bootstrap/Card";
 import { Link, useHistory } from "react-router-dom";
+import { AuthContext } from "../Components/AuthProvider";
 
 const ProductCards = ({ id, image, name, price, loggedIn }) => {
   let history = useHistory();
+  const { userId, updateUserId } = useContext(AuthContext);
+
   const Buy = () => {
     if (loggedIn.userid === 0) {
       history.push({
@@ -24,7 +27,7 @@ const ProductCards = ({ id, image, name, price, loggedIn }) => {
         <Card.Body>
           <Card.Text>Price : {price}</Card.Text>
           <Card.Link onClick={() => Buy()}>Buy</Card.Link>
-          <Card.Link as={Link} to={`/products/` + id + `/` + loggedIn.userid}>
+          <Card.Link as={Link} to={`/products/` + id + `/` + userId}>
             Details
           </Card.Link>
         </Card.Body>

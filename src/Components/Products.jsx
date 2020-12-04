@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
@@ -6,14 +6,17 @@ import Button from "react-bootstrap/Button";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
 import { fetchProducts } from "../Services/Service.firebase";
+import { AuthContext } from "../Components/AuthProvider";
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setfilteredProducts] = useState([]);
   const history = useHistory();
-  let id = props.match.params.id;
+  const { userId, updateUserId } = useContext(AuthContext)
 
-  let userid = props.match.params.userid;
+  let id = props.match.params.id;
+  let userid=userId;
+  console.log(id,userid);
 
   useEffect(async () => {
     let myPromise = new Promise(function (myResolve, myReject) {
@@ -26,21 +29,23 @@ const Products = (props) => {
   }, []);
 
   const AddToCart = () => {
-    if (userid.toString() === "0") {
+    if (userid===0) {
       history.push({
         pathname: "/login",
         redirect: "products",
         pid: id,
       });
     } else {
-      let user = users.find((x) => x.id.toString() === userid.toString());
-      if (user.cart.includes(id)) {
-        alert("Item already exists in cart.");
-      } else {
-        user.cart.push(id);
-        console.log(user.cart);
-        alert("Product added to cart.");
-      }
+      console.log("in add to cart");
+      
+      // let user = users.find((x) => x.id.toString() === userid.toString());
+      // if (user.cart.includes(id)) {
+      //   alert("Item already exists in cart.");
+      // } else {
+      //   user.cart.push(id);
+      //   console.log(user.cart);
+      //   alert("Product added to cart.");
+      // }
     }
   };
 
