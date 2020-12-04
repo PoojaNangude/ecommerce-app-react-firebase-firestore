@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
@@ -6,13 +6,16 @@ import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import Routes from "./Routes";
+import { AuthContext } from "../Components/AuthProvider";
 
 const Header = () => {
+  const { userId } = useContext(AuthContext);
   const [loggedIn, setLoggedIn] = useState({ status: false, userid: 0 });
 
   return (
     <>
       <Router>
+        {console.log("rendered", userId)}
         <Navbar bg="light" variant="light">
           <Navbar.Brand as={Link} to="/">
             eCommerce App
@@ -39,13 +42,13 @@ const Header = () => {
             </NavDropdown>
           </Nav>
           <Form inline>
-            {!loggedIn.status && (
+            {userId === 0 && (
               <Button variant="outline-primary" as={Link} to="/login">
                 Login
               </Button>
             )}
 
-            {loggedIn.status && (
+            {userId !== 0 && (
               <Button variant="outline-primary" as={Link} to="/logout">
                 Logout
               </Button>

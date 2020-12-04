@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
-import { fetchProducts } from "../Services/Service.firebase";
+import { fetchProducts, updateList } from "../Services/Service.firebase";
+import { AuthContext } from "../Components/AuthProvider";
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
@@ -13,8 +13,7 @@ const Products = (props) => {
   const history = useHistory();
   let id = props.match.params.id;
 
-  let userid = props.match.params.userid;
-
+  const { userId } = useContext(AuthContext);
   useEffect(async () => {
     let myPromise = new Promise(function (myResolve, myReject) {
       myResolve(fetchProducts());
@@ -26,44 +25,32 @@ const Products = (props) => {
   }, []);
 
   const AddToCart = () => {
-    if (userid.toString() === "0") {
+    if (userId.toString() === 0) {
       history.push({
         pathname: "/login",
         redirect: "products",
         pid: id,
       });
     } else {
-      let user = users.find((x) => x.id.toString() === userid.toString());
-      if (user.cart.includes(id)) {
-        alert("Item already exists in cart.");
-      } else {
-        user.cart.push(id);
-        console.log(user.cart);
-        alert("Product added to cart.");
-      }
     }
   };
 
   const AddToWishlist = () => {
-    if (userid.toString() === "0") {
+    if (userId === 0) {
       history.push({
         pathname: "/login",
         redirect: "products",
         pid: id,
       });
     } else {
-      let user = users.find((x) => x.id.toString() === userid.toString());
-      if (user.wishlist.includes(id)) {
-        alert("Item already exists in wishlist.");
-      } else {
-        user.wishlist.push(id);
-        alert("Product added to wishlist.");
-      }
+      updateList(userId, id)
+        .then((msg) => alert(msg))
+        .catch((err) => console.log(err));
     }
   };
 
   const Buy = () => {
-    if (userid.toString() === "0") {
+    if (userId === 0) {
       history.push({
         pathname: "/login",
         redirect: "buy",

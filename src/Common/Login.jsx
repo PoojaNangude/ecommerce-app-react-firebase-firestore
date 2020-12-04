@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import users from "../Constants/users";
 import { AuthContext } from "../Components/AuthProvider";
 import { fetchUsers } from "../Services/Service.firebase";
 
@@ -13,27 +12,24 @@ const Login = (props) => {
   const history = useHistory();
   const location = useLocation();
 
-  //const { users, setUsers } = useContext(AuthContext);
-
-  //console.log(users);
+  const { userId, updateUserId } = useContext(AuthContext);
 
   const submitForm = (e) => {
     e.preventDefault();
-    //console.log(users);
-    fetchUsers(username, password);
-    // for (let user of users) {
-    //   if (username === user.username && password === user.password) {
-    //     props.setLoggedIn({ status: true, userid: user.id });
 
-    //     if (location.redirect === "products") {
-    //       history.push(`/products/` + location.pid + `/` + user.id);
-    //     } else if (location.redirect === "buy") {
-    //       history.push(`/purchase/` + location.pid);
-    //     } else {
-    //       history.goBack();
-    //     }
-    //   }
-    // }
+    fetchUsers(username, password)
+      .then((data) => {
+        console.log(data[0]["id"]);
+        updateUserId(data[0]["id"]);
+        if (location.redirect === "products") {
+          history.push(`/products/` + location.pid + `/` + userId);
+        } else if (location.redirect === "buy") {
+          history.push(`/purchase/` + location.pid);
+        } else {
+          history.goBack();
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
