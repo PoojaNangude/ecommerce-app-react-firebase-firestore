@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
-import { fetchProducts } from "../Services/Service.firebase";
+import { fetchProducts,AddItemToCart } from "../Services/Service.firebase";
 import { AuthContext } from "../Components/AuthProvider";
 
 const Products = (props) => {
@@ -28,7 +28,8 @@ const Products = (props) => {
     setfilteredProducts(prod);
   }, []);
 
-  const AddToCart = () => {
+  const AddToCart = (e) => {
+    // e.preventDefault();
     if (userid===0) {
       history.push({
         pathname: "/login",
@@ -36,16 +37,11 @@ const Products = (props) => {
         pid: id,
       });
     } else {
-      console.log("in add to cart");
-      
-      // let user = users.find((x) => x.id.toString() === userid.toString());
-      // if (user.cart.includes(id)) {
-      //   alert("Item already exists in cart.");
-      // } else {
-      //   user.cart.push(id);
-      //   console.log(user.cart);
-      //   alert("Product added to cart.");
-      // }
+      AddItemToCart(id,userId)
+      .then((data)=>{
+        console.log("added to cart");
+      })
+      .catch((err)=> console.log(err));
     }
   };
 
@@ -121,7 +117,7 @@ const Products = (props) => {
 
               <Row>
                 <Col md={3}>
-                  <Button variant="primary" onClick={() => AddToCart()}>
+                  <Button variant="primary" onClick={(e) => AddToCart(e)}>
                     Add to Cart
                   </Button>
                 </Col>

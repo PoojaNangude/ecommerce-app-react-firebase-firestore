@@ -1,51 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import users from "../Constants/users";
 import products from "../Constants/products";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../Components/AuthProvider";
+import { FetchCart,FetchCartItems } from "../Services/Service.firebase";
 
 const Cart = (props) => {
-  //const [total, setTotal] = useState(0);
+  let items = [];
+  const { userId, updateUserId } = useContext(AuthContext)
   const history = useHistory();
   let id = props.loggedIn.userid;
   let sum = 0;
-  let items = [];
 
   useEffect(() =>
     setTimeout(() => {
-      if (id === 0) {
+      if (userId === 0) {
         history.push("/login");
       }
     }, 2000)
   );
 
-  if (id === 0) {
+  if (userId === 0) {
     return <h1>You are not logged in. Redirecting to Login ...</h1>;
   } else {
-    let user = users.filter((user) => user.id === id);
-
-    if (user[0].cart.length === 0) {
-      return <h1>Your Cart is empty.</h1>;
-    } else {
-      for (let item of user[0].cart) {
-        items.push(
-          products.filter((prod) => prod.id.toString() === item.toString())
-        );
-      }
-
-      for (let rec of items) {
-        sum = sum + rec[0].price;
-        console.log(sum);
-      }
-    }
-
+      FetchCart(userId)
+      .then((data)=>{
+        for(let cartid of data[0]["cart"]){
+          FetchCartItems(cartid)
+          .then((prd)=>{
+            items.push(prd[0]);
+          })
+        }
+      })
+      .catch((err)=> console.log(err));
+      console.log(items);
     return (
       <div>
+        
         <h1>Your Cart</h1>
         <ListGroup>
-          {items.map((item) => {
+          {items !==[] && (
+          items.map((item) => {
             return (
               <div key={item[0].id}>
                 <ListGroup.Item>
@@ -78,7 +76,7 @@ const Cart = (props) => {
                 </ListGroup.Item>
               </div>
             );
-          })}
+          }))}
         </ListGroup>
         <Row>
           <Col md={6}>

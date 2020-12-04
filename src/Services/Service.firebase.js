@@ -16,25 +16,40 @@ export const fetchUsers = async (username, password) => {
     }
   })
   return(usr);
-
-  // const data = db.collection("users").where("username", "==", username)
-  //   .get()
-  //   .then(function(querySnapshot) {
-  //       querySnapshot.forEach(function(doc) {
-  //           let usr = doc.data();
-  //           console.log("user",usr);
-  //           return(usr)
-  //       });
-  //   })
-  //   console.log("data",data);
-  //   return (data);
-
-  // console.log(data);
-  // const s = data.docs.map((doc) => doc.data());
-  // const rec=s.filter(s => s.username===username);
-  // console.log(rec[0]);
-  // return s;
 };
+
+export const AddItemToCart = async (id,userId) => {
+  const db = firebase.firestore();
+let usr=firebase.firestore().collection("users").where("id", "==", userId)
+  .get()
+  .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          if((doc.data()["cart"]).includes(id)==false){
+          doc.ref.update({ cart: [...doc.data()["cart"], id] });}
+      });
+ })
+}
+
+export const FetchCart = async (userId) =>{
+  const db = firebase.firestore();
+  let data = await db.collection("users").where("id","==",userId).get();
+  const usr= data.docs.map((doc) =>{
+      return(doc.data());
+  })
+  return(usr);
+}
+
+export const FetchCartItems = async (cartid) =>{
+  // console.log("in")
+  const db = firebase.firestore();
+  let data = await db.collection("products").where("id","==",cartid).get();
+  const prd= data.docs.map((doc) =>{
+      return(doc.data());
+    
+  })
+  return(prd);
+
+}
 
 export const fetchDeals = async () => {
   const db = firebase.firestore();
