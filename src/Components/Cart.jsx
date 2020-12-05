@@ -22,7 +22,7 @@ const Cart = (props) => {
 
   useEffect(() => {
     if (userId === 0) {
-      return <h1>You are not logged in. Redirecting to Login ...</h1>;
+      return ;
     } else {
       FetchUserCart(userId)
         .then((data) => {
