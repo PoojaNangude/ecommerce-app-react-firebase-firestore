@@ -29,7 +29,6 @@ const Products = (props) => {
   }, []);
 
   const AddToCart = (e) => {
-    // e.preventDefault();
     if (userid===0) {
       history.push({
         pathname: "/login",
@@ -38,10 +37,8 @@ const Products = (props) => {
       });
     } else {
       AddItemToCart(id,userId)
-      .then((data)=>{
-        console.log("added to cart");
-      })
-      .catch((err)=> console.log(err));
+        .then((msg) => alert(msg))
+        .catch((err) => console.log(err));
     }
   };
 

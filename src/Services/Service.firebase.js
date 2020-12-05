@@ -20,14 +20,23 @@ export const fetchUsers = async (username, password) => {
 
 export const AddItemToCart = async (id,userId) => {
   const db = firebase.firestore();
-let usr=firebase.firestore().collection("users").where("id", "==", userId)
-  .get()
-  .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          if((doc.data()["cart"]).includes(id)==false){
-          doc.ref.update({ cart: [...doc.data()["cart"], id] });}
+  let msg = "";
+  await db
+    .collection("users")
+    .where("id", "==", userId)
+    .get()
+    .then((DocumentSnapshot) => {
+      DocumentSnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        if (doc.data()["cart"].includes(id)) {
+          msg = "Item already exists in wishlist.";
+        } else {
+          doc.ref.update({ cart: [...doc.data()["cart"], id] });
+          msg = "Product added to wishlist.";
+        }
       });
- })
+    });
+  return msg;
 }
 
 export const FetchCart = async (userId) =>{
@@ -40,7 +49,6 @@ export const FetchCart = async (userId) =>{
 }
 
 export const FetchCartItems = async (cartid) =>{
-  // console.log("in")
   const db = firebase.firestore();
   let data = await db.collection("products").where("id","==",cartid).get();
   const prd= data.docs.map((doc) =>{
@@ -56,4 +64,25 @@ export const fetchDeals = async () => {
   const data = await db.collection("deals").get();
   const s = data.docs.map((doc) => doc.data());
   return s;
+};
+
+export const FetchUserCart = async (userId) => {
+  const db = firebase.firestore();
+  const users = await db.collection("users").where("id", "==", userId).get();
+  const prod = await db.collection("products").get();
+
+  const cartfetch = users.docs.map((doc) => {
+    if (doc.data()["cart"].length === 0) {
+      return null;
+    } else {
+      let cart = [];
+      for (let id of doc.data()["cart"]) {
+        prod.docs.map((prod) => {
+          if (prod.data()["id"] === id) cart.push(prod.data());
+        });
+      }
+      return cart;
+    }
+  });
+  return cartfetch;
 };
