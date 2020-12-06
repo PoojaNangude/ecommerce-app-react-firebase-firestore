@@ -29,10 +29,10 @@ export const AddItemToCart = async (id,userId) => {
       DocumentSnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
         if (doc.data()["cart"].includes(id)) {
-          msg = "Item already exists in wishlist.";
+          msg = "Item already exists in cart.";
         } else {
           doc.ref.update({ cart: [...doc.data()["cart"], id] });
-          msg = "Product added to wishlist.";
+          msg = "Product added to cart.";
         }
       });
     });
