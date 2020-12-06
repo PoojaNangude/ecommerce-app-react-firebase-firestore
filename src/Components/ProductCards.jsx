@@ -3,12 +3,12 @@ import Card from "react-bootstrap/Card";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider";
 
-const ProductCards = ({ id, image, name, price, loggedIn }) => {
+const ProductCards = ({ id, image, name, price}) => {
   let history = useHistory();
   const { userId, updateUserId } = useContext(AuthContext);
 
   const Buy = () => {
-    if (loggedIn.userid === 0) {
+    if (userId === 0) {
       history.push({
         pathname: "/login",
         redirect: "buy",
@@ -33,8 +33,6 @@ const ProductCards = ({ id, image, name, price, loggedIn }) => {
         </Card.Body>
       </Card>
     </div>
-
-    // </div>
   );
 };
 

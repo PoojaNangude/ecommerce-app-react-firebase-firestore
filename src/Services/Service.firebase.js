@@ -39,26 +39,6 @@ export const AddItemToCart = async (id,userId) => {
   return msg;
 }
 
-export const FetchCart = async (userId) =>{
-  const db = firebase.firestore();
-  let data = await db.collection("users").where("id","==",userId).get();
-  const usr= data.docs.map((doc) =>{
-      return(doc.data());
-  })
-  return(usr);
-}
-
-export const FetchCartItems = async (cartid) =>{
-  const db = firebase.firestore();
-  let data = await db.collection("products").where("id","==",cartid).get();
-  const prd= data.docs.map((doc) =>{
-      return(doc.data());
-    
-  })
-  return(prd);
-
-}
-
 export const fetchDeals = async () => {
   const db = firebase.firestore();
   const data = await db.collection("deals").get();

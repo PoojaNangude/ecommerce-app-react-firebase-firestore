@@ -12,13 +12,14 @@ const Login = (props) => {
   const history = useHistory();
   const location = useLocation();
 
-  const { userId, updateUserId } = useContext(AuthContext)
+  const { userId, updateUserId, updateUserName } = useContext(AuthContext)
 
 const submitForm =(e)=> {
     e.preventDefault();
     fetchUsers(username, password)
     .then((data)=>{
     updateUserId(data[0]["id"])
+    updateUserName(data[0]["username"]);
         if (location.redirect === "products") {
           history.push(`/products/` + location.pid + `/` + data[0]["id"]);
         } else if (location.redirect === "buy") {

@@ -4,7 +4,7 @@ import "./App.css";
 import ProductCards from "./ProductCards";
 import { fetchProducts } from "../Services/Service.firebase";
 
-const RandomProducts = (props) => {
+const RandomProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(async () => {
@@ -23,7 +23,6 @@ const RandomProducts = (props) => {
           return (
             <ProductCards
               key={product.id}
-              loggedIn={props.loggedIn}
               {...product}
             ></ProductCards>
           );
@@ -37,7 +36,7 @@ export const Home = (props) => {
   return (
     <div>
       <Carousel />
-      <RandomProducts loggedIn={props.loggedIn} />
+      <RandomProducts />
     </div>
   );
 };

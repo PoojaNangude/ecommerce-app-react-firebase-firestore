@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider";
 import { FetchUserCart } from "../Services/Service.firebase";
 
-const Cart = (props) => {
+const Cart = () => {
   const [cart,setCart]= useState([]);
   const { userId, updateUserId } = useContext(AuthContext)
   const history = useHistory();
@@ -21,9 +21,7 @@ const Cart = (props) => {
   );
 
   useEffect(() => {
-    if (userId === 0) {
-      return ;
-    } else {
+      if (userId !==0){
       FetchUserCart(userId)
         .then((data) => {
           console.log(data[0]);
@@ -33,8 +31,8 @@ const Cart = (props) => {
             setCart(data[0]);
           }
         })
-        .catch((err) => console.log(err));
-    }
+        .catch((err) => console.log(err));}
+
   }, []);
 
   cart.map((item)=>{

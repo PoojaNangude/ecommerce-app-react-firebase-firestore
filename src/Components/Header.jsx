@@ -8,9 +8,9 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import Routes from "./Routes";
 import { AuthContext } from "../Components/AuthProvider";
 
+
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState({ status: false, userid: 0 });
-  const {  userId, updateUserId } = useContext(AuthContext);
+  const {  userId, updateUserId, username } = useContext(AuthContext);
   return (
     <>
       <Router>
@@ -45,7 +45,9 @@ const Header = () => {
                 Login
               </Button>
             )}
-
+            {username && (
+              <h3>{username}</h3>
+            )}
             {userId !== 0 &&  (
               <Button variant="outline-primary" as={Link} to="/logout">
                 Logout
@@ -53,7 +55,7 @@ const Header = () => {
             )}
           </Form>
         </Navbar>
-        <Routes loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        <Routes />
       </Router>
     </>
   );

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
 import './App.css';
-import { fetchDeals, fetchProducts } from "../Services/Service.firebase";
-
+import { fetchDeals} from "../Services/Service.firebase";
 
 const Carousel = () => {
+    const [deals,setDeals]=useState([]);
+
     const settings = {
         dots: true,
         slidesToShow: 1,
@@ -16,14 +17,13 @@ const Carousel = () => {
         centerMode:true,
     };
 
-    const [deals,setDeals]=useState([]);
+    
     useEffect( async ()=>{
     let myPromise = new Promise(function(myResolve, myReject){
       myResolve(fetchDeals())
     })
     let deals = await myPromise;
     setDeals(deals);
-    // console.log(deals);
     },[])
     return (
         <div>
@@ -38,6 +38,7 @@ const Carousel = () => {
                     );
                 })}
             </Slider>
+            
         </div>
     )
 }
