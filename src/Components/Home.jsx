@@ -17,7 +17,6 @@ const RandomProducts = () => {
 
   return (
     <div>
-      <h1 className="App">Some of our Products</h1>
       <div className="productlist">
         {products.slice(2, 8).map((product) => {
           return (

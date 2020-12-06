@@ -6,7 +6,7 @@ import './App.css';
 import { fetchDeals} from "../Services/Service.firebase";
 
 const Carousel = () => {
-    const [deals,setDeals]=useState([]);
+    const [deals,setDeals]=useState(null);
 
     const settings = {
         dots: true,
@@ -27,6 +27,8 @@ const Carousel = () => {
     },[])
     return (
         <div>
+            {deals && (
+                <div>
             <h1 className="App">WELCOME!!!</h1>
             <h4 className="App">WE HAVE GOT THE BEST DEALS FOR YOU</h4>
             <Slider {...settings} className="App">
@@ -38,6 +40,9 @@ const Carousel = () => {
                     );
                 })}
             </Slider>
+            <h2 className="App">Some of our Products</h2>
+            </div>
+            )}
             
         </div>
     )
