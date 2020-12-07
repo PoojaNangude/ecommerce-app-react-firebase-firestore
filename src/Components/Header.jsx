@@ -25,6 +25,7 @@ const Header = () => {
   return (
     <>
       <Router>
+        {console.log("rendered", userId)}
         <Navbar bg="light" variant="light">
           <Navbar.Brand as={Link} to="/">
             eCommerce App
@@ -57,7 +58,7 @@ const Header = () => {
               </Button>
             )}
             {username && (
-              <h3>{username}</h3>
+              <h3>Hello {username}</h3>
             )}
             {(userId !== 0 ) &&  (
               <Button variant="outline-primary" as={Link} to="/logout">

@@ -41,9 +41,17 @@ const Category = (props) => {
   return (
     <div>
       {!isavl && (
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
+        <center>
+          <Spinner
+            style={{
+              marginTop: "20rem",
+            }}
+            animation="border"
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </center>
       )}
       {isavl && (
         <ListGroup>

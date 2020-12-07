@@ -1,4 +1,4 @@
-import React, { useState, useContext   } from "react";
+import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -45,6 +45,7 @@ const submitForm =(e)=> {
               <Form.Control
                 type="text"
                 placeholder="Enter username"
+                //value=kirti
                 value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />
@@ -55,6 +56,7 @@ const submitForm =(e)=> {
               <Form.Control
                 type="password"
                 placeholder="Password"
+                //value=kirti
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

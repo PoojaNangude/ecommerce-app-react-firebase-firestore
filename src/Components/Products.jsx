@@ -3,21 +3,17 @@ import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import users from "../Constants/users";
 import { useHistory } from "react-router-dom";
-import { fetchProducts,AddItemToCart } from "../Services/Service.firebase";
+import { AddItemToCart } from "../Services/Service.firebase";
+import { fetchProducts, updateList } from "../Services/Service.firebase";
 import { AuthContext } from "../Components/AuthProvider";
 
 const Products = (props) => {
+  let id=props.match.params.id;
   const [products, setProducts] = useState([]);
   const [filteredProducts, setfilteredProducts] = useState([]);
   const history = useHistory();
   const { userId, updateUserId } = useContext(AuthContext)
-
-  let id = props.match.params.id;
-  let userid=userId;
-  console.log(id,userid);
-
   useEffect(async () => {
     let myPromise = new Promise(function (myResolve, myReject) {
       myResolve(fetchProducts());
@@ -29,7 +25,7 @@ const Products = (props) => {
   }, []);
 
   const AddToCart = (e) => {
-    if (userid===0) {
+    if (userId===0) {
       history.push({
         pathname: "/login",
         redirect: "products",
@@ -43,25 +39,21 @@ const Products = (props) => {
   };
 
   const AddToWishlist = () => {
-    if (userid.toString() === "0") {
+    if (userId === 0) {
       history.push({
         pathname: "/login",
         redirect: "products",
         pid: id,
       });
     } else {
-      let user = users.find((x) => x.id.toString() === userid.toString());
-      if (user.wishlist.includes(id)) {
-        alert("Item already exists in wishlist.");
-      } else {
-        user.wishlist.push(id);
-        alert("Product added to wishlist.");
-      }
+      updateList(userId, id)
+        .then((msg) => alert(msg))
+        .catch((err) => console.log(err));
     }
   };
 
   const Buy = () => {
-    if (userid.toString() === "0") {
+    if (userId === 0) {
       history.push({
         pathname: "/login",
         redirect: "buy",
