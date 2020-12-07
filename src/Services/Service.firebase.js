@@ -167,3 +167,15 @@ export const RemoveItemFromCart = async (id, userId) => {
     });
   return msg;
 };
+
+export const GetProductInformation = async(id) =>{
+  const db = firebase.firestore();
+  let data = await db
+    .collection("products")
+    .where("id", "==", id)
+    .get();
+  const product = data.docs.map((doc) => {
+      return doc.data();
+  });
+  return product;
+}

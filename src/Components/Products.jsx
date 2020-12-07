@@ -5,23 +5,20 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import { AddItemToCart } from "../Services/Service.firebase";
-import { fetchProducts, updateList } from "../Services/Service.firebase";
+import { updateList, GetProductInformation } from "../Services/Service.firebase";
 import { AuthContext } from "../Components/AuthProvider";
 
 const Products = (props) => {
   let id=props.match.params.id;
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setfilteredProducts] = useState([]);
   const history = useHistory();
   const { userId, updateUserId } = useContext(AuthContext)
   useEffect(async () => {
     let myPromise = new Promise(function (myResolve, myReject) {
-      myResolve(fetchProducts());
+      myResolve(GetProductInformation(id));
     });
     let prod = await myPromise;
     setProducts(prod);
-    prod = prod.find((x) => x.id.toString() === id.toString());
-    setfilteredProducts(prod);
   }, []);
 
   const AddToCart = (e) => {
@@ -66,13 +63,13 @@ const Products = (props) => {
 
   return (
     <div className="App">
-      {filteredProducts && (
+      {products[0] && (
         <Container>
           <Row>
             <Col md={6}>
               <Row>
                 <Image
-                  src={filteredProducts.image}
+                  src={products[0].image}
                   height="450px"
                   width="450px"
                   rounded
@@ -87,19 +84,19 @@ const Products = (props) => {
 
             <Col md={6}>
               <Row>
-                <h1>{filteredProducts.name}</h1>
+                <h1>{products[0].name}</h1>
               </Row>
               <Row>
-                <h3>${filteredProducts.price}</h3>
+                <h3>${products[0].price}</h3>
               </Row>
               <Row>
                 <Card style={{ height: "23rem", width: "35rem" }}>
                   <Card.Body>
                     <Card.Title>Description</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
-                      {filteredProducts.category}/{filteredProducts.subcategory}
+                      {products[0].category}/{products[0].subcategory}
                     </Card.Subtitle>
-                    <Card.Text>{filteredProducts.description}</Card.Text>
+                    <Card.Text>{products[0].description}</Card.Text>
                   </Card.Body>
                 </Card>
               </Row>
