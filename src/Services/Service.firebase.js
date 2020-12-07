@@ -30,9 +30,7 @@ export const fetchUserId = async (userid) => {
   const prod = await db.collection("products").get();
 
   const prod_data = users.docs.map((doc) => {
-    console.log("doc data :", doc.data());
     if (doc.data()["wishlist"].length === 0) {
-      console.log("wishlist is empty");
       return null;
     } else {
       let w = [];
@@ -44,13 +42,12 @@ export const fetchUserId = async (userid) => {
       return w;
     }
   });
-  console.log("prod_data : ", prod_data);
+
   return prod_data;
 };
 
-export const updateList = async (userid, prodid) => {
+export const removeItem = async (userid, id) => {
   const db = firebase.firestore();
-  console.log(prodid);
   let msg = "";
   await db
     .collection("users")
@@ -58,19 +55,38 @@ export const updateList = async (userid, prodid) => {
     .get()
     .then((DocumentSnapshot) => {
       DocumentSnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        if (doc.data()["wishlist"].includes(prodid)) {
-          console.log("Item already exists in wishlist.");
-          msg = "Item already exists in wishlist.";
-        } else {
-          //doc.ref.update({ wishlist: [] });
-          doc.ref.update({ wishlist: [...doc.data()["wishlist"], prodid] });
-          console.log("Product added to wishlist.");
-          msg = "Product added to wishlist.";
+        if (doc.data()["wishlist"].includes(id)) {
+          doc.ref.update({
+            wishlist: firebase.firestore.FieldValue.arrayRemove(id),
+          });
+          msg = "wishlist is updated";
         }
       });
     });
-  console.log(msg);
+  return msg;
+};
+
+export const updateList = async (userid, prodid) => {
+  const db = firebase.firestore();
+
+  let msg = "";
+  await db
+    .collection("users")
+    .where("id", "==", userid)
+    .get()
+    .then((DocumentSnapshot) => {
+      DocumentSnapshot.forEach((doc) => {
+        if (doc.data()["wishlist"].includes(prodid)) {
+          msg = "Item already exists in wishlist.";
+        } else {
+          doc.ref.update({ wishlist: [...doc.data()["wishlist"], prodid] });
+
+          msg = "Product added to wishlist.";
+        }
+        //doc.ref.update({ wishlist: [] });
+      });
+    });
+
   return msg;
 };
 

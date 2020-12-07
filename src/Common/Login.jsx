@@ -21,6 +21,7 @@ const Login = (props) => {
       .then((data) => {
         console.log(data[0]["id"]);
         updateUserId(data[0]["id"]);
+
         if (location.redirect === "products") {
           history.push(`/products/` + location.pid + `/` + userId);
         } else if (location.redirect === "buy") {
@@ -42,6 +43,7 @@ const Login = (props) => {
               <Form.Control
                 type="text"
                 placeholder="Enter username"
+                //value=kirti
                 value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />
@@ -52,6 +54,7 @@ const Login = (props) => {
               <Form.Control
                 type="password"
                 placeholder="Password"
+                //value=kirti
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

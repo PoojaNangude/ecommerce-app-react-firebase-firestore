@@ -2,9 +2,10 @@ import React, { useEffect, useContext, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider";
-import { fetchUserId } from "../Services/Service.firebase";
+import { fetchUserId, removeItem } from "../Services/Service.firebase";
 
 const Wishlist = (props) => {
   const { userId } = useContext(AuthContext);
@@ -26,7 +27,6 @@ const Wishlist = (props) => {
     } else {
       fetchUserId(userId)
         .then((data) => {
-          console.log(data[0]);
           if (!data[0]) {
             alert("Wishlist is empty!");
           } else {
@@ -36,6 +36,16 @@ const Wishlist = (props) => {
         .catch((err) => console.log(err));
     }
   }, []);
+
+  const removeFromList = async (id) => {
+    await removeItem(userId, id);
+
+    await fetchUserId(userId)
+      .then((data) => {
+        setWishlist(data[0]);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="container">
@@ -54,7 +64,16 @@ const Wishlist = (props) => {
                         width="220px"
                       ></Image>
                     </ListGroupItem>
-                    <ListGroupItem>Price : {item.price}</ListGroupItem>
+                    <ListGroupItem>
+                      Price : {item.price}
+                      <Button
+                        variant="outline-primary"
+                        style={{ marginLeft: "7rem" }}
+                        onClick={() => removeFromList(item.id)}
+                      >
+                        Remove
+                      </Button>
+                    </ListGroupItem>
                   </ListGroup>
                 </div>
               </div>
