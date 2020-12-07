@@ -17,6 +17,10 @@ const submitForm =(e)=> {
     e.preventDefault();
     fetchUsers(username, password)
     .then((data)=>{
+      localStorage.setItem("userId",data[0]["id"]);
+      localStorage.setItem("username",data[0]["username"]);
+      console.log("userId",localStorage.getItem("userId"));
+      console.log("username",localStorage.getItem("username"));
     updateUserId(data[0]["id"])
     updateUserName(data[0]["username"]);
         if (location.redirect === "products") {
