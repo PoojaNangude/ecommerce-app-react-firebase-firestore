@@ -66,3 +66,22 @@ export const FetchUserCart = async (userId) => {
   });
   return cartfetch;
 };
+
+export const RemoveItemFromCart =async (id,userId) =>{
+  const db = firebase.firestore();
+  let msg = "";
+  await db
+    .collection("users")
+    .where("id", "==", userId)
+    .get()
+    .then((DocumentSnapshot) => {
+      DocumentSnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        if (doc.data()["cart"].includes(id)) {
+          doc.ref.update({cart:firebase.firestore.FieldValue.arrayRemove(id)})
+          msg="Item deleted from cart"
+        } 
+      });
+    });
+  return msg;
+}

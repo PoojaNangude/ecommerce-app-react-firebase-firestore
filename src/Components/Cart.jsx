@@ -4,7 +4,7 @@ import { Container, Col, Row, Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider";
-import { FetchUserCart } from "../Services/Service.firebase";
+import { FetchUserCart, RemoveItemFromCart } from "../Services/Service.firebase";
 
 const Cart = () => {
   const [cart,setCart]= useState([]);
@@ -33,11 +33,17 @@ const Cart = () => {
         })
         .catch((err) => console.log(err));}
 
-  }, []);
+  }, [cart]);
 
   cart.map((item)=>{
     sum=sum+parseFloat(item.price)
   })
+
+  const RemoveFromCart = (productid,userId) =>{
+    RemoveItemFromCart(productid,userId)
+    .then((msg) => alert(msg))
+    .catch((err) => console.log(err));
+  }
 
     return (
       <div>
@@ -74,8 +80,10 @@ const Cart = () => {
 
                       <Col>
                         <Row>
-                          
                           <h6>${item.price}</h6>
+                        </Row>
+                        <Row>
+                          <Button onClick={()=>RemoveFromCart(item.id,userId)}>Remove from Cart</Button>
                         </Row>
                       </Col>
                     </Row>

@@ -8,7 +8,6 @@ import { fetchUsers } from "../Services/Service.firebase";
 const Login = (props) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
   const history = useHistory();
   const location = useLocation();
 
