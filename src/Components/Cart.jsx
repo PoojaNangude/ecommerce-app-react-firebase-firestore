@@ -55,10 +55,18 @@ const Cart = () => {
     sum=sum+parseFloat(item.price)
   })
 
-  const RemoveFromCart = (productid,userId) =>{
-    RemoveItemFromCart(productid,userId)
-    .then((msg) => alert(msg))
-    .catch((err) => console.log(err));
+  const RemoveFromCart = async (productid,userId) =>{
+    await RemoveItemFromCart(productid,userId)
+         await FetchUserCart(userId)
+        .then((data) => {
+          console.log(data[0]);
+          if (!data[0]) {
+            alert("Cart is empty!");
+          } else {
+            setCart(data[0]);
+          }
+        })
+        .catch((err) => console.log(err));
   }
 
     return (
