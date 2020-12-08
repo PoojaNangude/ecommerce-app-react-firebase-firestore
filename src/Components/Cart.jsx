@@ -68,6 +68,7 @@ const Cart = () => {
             setAvailable(true);
           } else {
             setCart([...data[0]]);
+            setAvailable(true);
           }
         })
         .catch((err) => console.log(err));
