@@ -5,9 +5,11 @@ import Image from "react-bootstrap/Image";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider";
 import { FetchUserCart, RemoveItemFromCart } from "../Services/Service.firebase";
+import Spinner from "react-bootstrap/Spinner";
 
 const Cart = () => {
   const {  userId, updateUserId, username, updateUserName } = useContext(AuthContext);
+  const [available, setAvailable]=useState(false);
   let uid,uname;
   useEffect(()=>{
   uid = localStorage.getItem("userId");
@@ -19,7 +21,6 @@ const Cart = () => {
   },[username,userId]);
 
   const [cart,setCart]= useState([]);
-  // const { userId, updateUserId } = useContext(AuthContext)
   const history = useHistory();
   let sum = 0;
 
@@ -42,9 +43,11 @@ const Cart = () => {
         .then((data) => {
           console.log(data[0]);
           if (!data[0]) {
-            alert("Cart is empty!");
+            setCart([]);
+            setAvailable(true);
           } else {
             setCart(data[0]);
+            setAvailable(true);
           }
         })
         .catch((err) => console.log(err));}
@@ -61,9 +64,10 @@ const Cart = () => {
         .then((data) => {
           console.log(data[0]);
           if (!data[0]) {
-            alert("Cart is empty!");
+            setCart([]);
+            setAvailable(true);
           } else {
-            setCart(data[0]);
+            setCart([...data[0]]);
           }
         })
         .catch((err) => console.log(err));
@@ -71,10 +75,33 @@ const Cart = () => {
 
     return (
       <div>
-        {userId!==0 && (
+        {available===false && (
           <div>
-            <h1>Your Cart</h1>
-                    <ListGroup>
+        <center>
+          <h1>Loading....</h1>
+          <Spinner
+            style={{
+              marginTop: "10rem",
+            }}
+            animation="border"
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </center>
+          </div>
+        )
+        }
+        {cart.length===0 && available==true && (
+          <div>
+            <h1>Your cart is empty!!!</h1>
+          </div>
+        )
+        }
+        {available===true && cart.length!==0 && (
+          <div>
+              <ListGroup>
+              <h1>Your Cart</h1>
               {cart && (
               cart.map((item) => {
                 return (
@@ -119,7 +146,7 @@ const Cart = () => {
             <Row>
               
               <Col md={6}>
-                <h1>Total : {sum}</h1>
+                <h1>Total : ${sum.toFixed(2)}</h1>
               </Col>
               <Col md={6}>
                 <Button>Proceed to Buy All</Button>

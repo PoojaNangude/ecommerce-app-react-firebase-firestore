@@ -75,11 +75,6 @@ const Products = (props) => {
                   rounded
                 />
               </Row>
-              <Row>
-                <Button variant="primary" onClick={() => AddToWishlist()}>
-                  Add to Wishlist
-                </Button>
-              </Row>
             </Col>
 
             <Col md={6}>
@@ -102,16 +97,22 @@ const Products = (props) => {
               </Row>
 
               <Row>
-                <Col md={3}>
-                  <Button variant="primary" onClick={(e) => AddToCart(e)}>
+                <Col md={4}>
+                  <Button className='mt-3' variant="primary" onClick={(e) => AddToCart(e)}>
                     Add to Cart
                   </Button>
                 </Col>
-                <Col md={5}>
-                  <Button variant="primary" onClick={() => Buy()}>
+                <Col md={4}>
+                  <Button className='mt-3' variant="primary" onClick={() => Buy()}>
                     Proceed to Buy
                   </Button>
                 </Col>
+
+                <Col md={4}>     
+                <Button className='mt-3' variant="primary" onClick={() => AddToWishlist()}>
+                  Add to Wishlist
+                </Button>
+              </Col> 
               </Row>
             </Col>
           </Row>
