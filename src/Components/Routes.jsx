@@ -9,37 +9,23 @@ import Products from "./Products";
 import Logout from "../Common/Logout";
 import Purchase from "./Purchase";
 
-const Routes = (props) => {
+const Routes = () => {
   return (
     <Switch>
       <Route exact path="/category/books">
-        <Category category="books" loggedIn={props.loggedIn}></Category>
+        <Category category="books"></Category>
       </Route>
       <Route exact path="/category/mobiles">
-        <Category category="phone" loggedIn={props.loggedIn}></Category>
+        <Category category="phone"></Category>
       </Route>
-      <Route exact path="/wishlist">
-        <Wishlist loggedIn={props.loggedIn}></Wishlist>
-      </Route>
-      <Route exact path="/cart">
-        <Cart loggedIn={props.loggedIn}></Cart>
-      </Route>
-      <Route exact path="/login">
-        <Login
-          loggedIn={props.loggedIn}
-          setLoggedIn={props.setLoggedIn}
-        ></Login>
-      </Route>
-      <Route exact path="/logout">
-        <Logout
-          loggedIn={props.loggedIn}
-          setLoggedIn={props.setLoggedIn}
-        ></Logout>
-      </Route>
+      <Route exact path="/wishlist" component={Wishlist}></Route>
+      <Route exact path="/cart" component={Cart}></Route>
+      <Route exact path="/login" component={Login}></Route>
+      <Route exact path="/logout" component={Logout}></Route>
       <Route exact path="/products/:id/:userid" component={Products} /> ;
       <Route exact path="/purchase/:id" component={Purchase} /> ;
       <Route exact path="/">
-        <Home loggedIn={props.loggedIn}></Home>
+        <Home></Home>
       </Route>
     </Switch>
   );

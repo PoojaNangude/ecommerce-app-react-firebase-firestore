@@ -21,6 +21,18 @@ export const fetchUsers = async (username, password) => {
   return usr;
 };
 
+// function to fetch all products of a given category
+export const fetchProductsAsPerCategory = async (category) => {
+  const db = firebase.firestore();
+  const data = await db
+    .collection("products")
+    .where("category", "==", category)
+    .get();
+  const category_data = data.docs.map((doc) => doc.data());
+
+  return category_data;
+};
+
 export const AddItemToCart = async (id, userId) => {
   const db = firebase.firestore();
   let msg = "";
@@ -42,51 +54,52 @@ export const AddItemToCart = async (id, userId) => {
   return msg;
 };
 
-export const fetchUserId = async (userid) => {
+// function to fetch all products from user's wishlist
+export const fetchUserWishlist = async (userid) => {
   const db = firebase.firestore();
-
   const users = await db.collection("users").where("id", "==", userid).get();
-
-  const prod = await db.collection("products").get();
+  const products = await db.collection("products").get();
 
   const prod_data = users.docs.map((doc) => {
     if (doc.data()["wishlist"].length === 0) {
       return null;
     } else {
-      let w = [];
+      let wishlist = [];
       for (let id of doc.data()["wishlist"]) {
-        prod.docs.map((prod) => {
-          if (prod.data()["id"] === id) w.push(prod.data());
+        products.docs.map((prod) => {
+          if (prod.data()["id"] === id) wishlist.push(prod.data());
         });
       }
-      return w;
+      return wishlist;
     }
   });
 
   return prod_data;
 };
 
+// function to fetch a particular product's data given the product id
 export const fetchProductFromId = async (id) => {
   const db = firebase.firestore();
-
-  const prod = await db.collection("products").where("id", "==", id).get();
-  const prod_data = prod.docs.map((prod) => prod.data());
-
+  const product = await db.collection("products").where("id", "==", id).get();
+  const prod_data = product.docs.map((prod) => prod.data());
   return prod_data[0];
 };
 
-export const removeItem = async (userid, id) => {
+// function to remove a particular product from user's wishlist
+export const removeItemFromWishlist = async (user_id, product_id) => {
   const db = firebase.firestore();
   let msg = "";
   await db
     .collection("users")
-    .where("id", "==", userid)
+    .where("id", "==", user_id)
     .get()
     .then((DocumentSnapshot) => {
-      DocumentSnapshot.forEach((doc) => {
-        if (doc.data()["wishlist"].includes(id)) {
+      DocumentSnapshot.forEach(async (doc) => {
+        if (doc.data()["wishlist"].includes(product_id)) {
           doc.ref.update({
-            wishlist: firebase.firestore.FieldValue.arrayRemove(id),
+            wishlist: await firebase.firestore.FieldValue.arrayRemove(
+              product_id
+            ),
           });
           msg = "wishlist is updated";
         }
@@ -95,24 +108,22 @@ export const removeItem = async (userid, id) => {
   return msg;
 };
 
-export const updateList = async (userid, prodid) => {
+// function to add a product to user's wishlist given product id
+export const AddItemToWishlist = async (user_id, product_id) => {
   const db = firebase.firestore();
-
   let msg = "";
   await db
     .collection("users")
-    .where("id", "==", userid)
+    .where("id", "==", user_id)
     .get()
     .then((DocumentSnapshot) => {
       DocumentSnapshot.forEach((doc) => {
-        if (doc.data()["wishlist"].includes(prodid)) {
+        if (doc.data()["wishlist"].includes(product_id)) {
           msg = "Item already exists in wishlist.";
         } else {
-          doc.ref.update({ wishlist: [...doc.data()["wishlist"], prodid] });
-
+          doc.ref.update({ wishlist: [...doc.data()["wishlist"], product_id] });
           msg = "Product added to wishlist.";
         }
-        //doc.ref.update({ wishlist: [] });
       });
     });
 

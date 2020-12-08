@@ -1,4 +1,4 @@
-import React, { useState,useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
@@ -8,24 +8,23 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import Routes from "./Routes";
 import { AuthContext } from "../Components/AuthProvider";
 
-
 const Header = () => {
-  const {  userId, updateUserId, username, updateUserName } = useContext(AuthContext);
-  let uid,uname;
-  useEffect(()=>{
-  uid = localStorage.getItem("userId");
-  uname= localStorage.getItem("username");
-    if(uname !== ""){
+  const { userId, updateUserId, username, updateUserName } = useContext(
+    AuthContext
+  );
+  let uid, uname;
+  useEffect(() => {
+    uid = localStorage.getItem("userId");
+    uname = localStorage.getItem("username");
+    if (uname !== "") {
       updateUserId(uid);
       updateUserName(uname);
     }
-  },[username,userId]);
-
+  }, [username, userId]);
 
   return (
     <>
       <Router>
-        {console.log("rendered", userId)}
         <Navbar bg="light" variant="light">
           <Navbar.Brand as={Link} to="/">
             eCommerce App
@@ -52,15 +51,15 @@ const Header = () => {
             </NavDropdown>
           </Nav>
           <Form inline>
-            { (userId === 0 || uname==="" ) && (
+            {(userId === 0 || uname === "") && (
               <Button variant="outline-primary" as={Link} to="/login">
                 Login
               </Button>
             )}
             {username && (
-              <h3>Hello {username}</h3>
+              <h3 style={{ marginRight: "3rem" }}>Hello {username}</h3>
             )}
-            {(userId !== 0 ) &&  (
+            {userId !== 0 && (
               <Button variant="outline-primary" as={Link} to="/logout">
                 Logout
               </Button>
