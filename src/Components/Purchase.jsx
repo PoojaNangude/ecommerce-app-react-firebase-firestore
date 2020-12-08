@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { fetchProductFromId } from "../Services/Service.firebase";
+import { Card } from "react-bootstrap";
 
 const Purchase = (props) => {
   const id = props.match.params.id;
@@ -18,6 +19,7 @@ const Purchase = (props) => {
     <div>
       <center>
         <h1>Order Summary</h1>
+
         <Image src={products.image} height="250px" width="220px"></Image>
         <h3>{products.name}</h3>
         <h4>Price : ${products.price}</h4>

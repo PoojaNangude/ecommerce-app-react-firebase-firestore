@@ -1,18 +1,19 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Image from "react-bootstrap/Image";
 import { Container, Col, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
+
 import { AddItemToCart } from "../Services/Service.firebase";
-import { updateList, GetProductInformation } from "../Services/Service.firebase";
+import { AddItemToWishlist, GetProductInformation } from "../Services/Service.firebase";
 import { AuthContext } from "../Components/AuthProvider";
 
 const Products = (props) => {
-  let id=props.match.params.id;
+  let id = props.match.params.id;
   const [products, setProducts] = useState([]);
   const history = useHistory();
-  const { userId, updateUserId } = useContext(AuthContext)
+  const { userId, updateUserId } = useContext(AuthContext);
   useEffect(async () => {
     let myPromise = new Promise(function (myResolve, myReject) {
       myResolve(GetProductInformation(id));
@@ -22,14 +23,14 @@ const Products = (props) => {
   }, []);
 
   const AddToCart = (e) => {
-    if (userId===0) {
+    if (userId === 0) {
       history.push({
         pathname: "/login",
         redirect: "products",
         pid: id,
       });
     } else {
-      AddItemToCart(id,userId)
+      AddItemToCart(id, userId)
         .then((msg) => alert(msg))
         .catch((err) => console.log(err));
     }
@@ -43,7 +44,7 @@ const Products = (props) => {
         pid: id,
       });
     } else {
-      updateList(userId, id)
+      AddItemToWishlist(userId, id)
         .then((msg) => alert(msg))
         .catch((err) => console.log(err));
     }
