@@ -57,7 +57,7 @@ const Header = () => {
               </Button>
             )}
             {username && (
-              <h3 style={{ marginRight: "3rem" }}>Hello {username}</h3>
+              <h5 style={{ marginRight: "2rem" }}>Hello {username}</h5>
             )}
             {userId !== 0 && (
               <Button variant="outline-primary" as={Link} to="/logout">

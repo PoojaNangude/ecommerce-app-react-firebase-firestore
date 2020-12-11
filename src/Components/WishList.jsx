@@ -17,12 +17,15 @@ const Wishlist = () => {
   );
   const [isavl, setIsavl] = useState("loading");
 
-  let uid, uname;
+  let uid = 0,
+    uname = "";
 
   const [wishlist, setWishlist] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
+    uid = localStorage.getItem("userId");
+    uname = localStorage.getItem("username");
     if (uname === "") {
       setTimeout(() => {
         if (userId === 0) {
@@ -38,17 +41,18 @@ const Wishlist = () => {
     if (uname !== "") {
       updateUserId(uid);
       updateUserName(uname);
+
+      fetchUserWishlist(userId)
+        .then((data) => {
+          if (!data[0]) {
+            setIsavl("empty");
+          } else {
+            setWishlist([...data[0]]);
+            setIsavl("full");
+          }
+        })
+        .catch((err) => console.log(err));
     }
-    fetchUserWishlist(userId)
-      .then((data) => {
-        if (!data[0]) {
-          setIsavl("empty");
-        } else {
-          setWishlist([...data[0]]);
-          setIsavl("full");
-        }
-      })
-      .catch((err) => console.log(err));
   }, [username, userId]);
 
   const removeFromWishlist = async (id) => {
@@ -61,10 +65,6 @@ const Wishlist = () => {
     } else {
       setWishlist([...data[0]]);
       setIsavl("full");
-    }
-
-    if (wishlist.length === 0) {
-      return <h3>Your Wishlist is empty</h3>;
     }
   };
 
@@ -89,6 +89,11 @@ const Wishlist = () => {
       {isavl === "empty" && (
         <center>
           <h3>Your Wishlist is empty...!</h3>
+        </center>
+      )}
+      {uname !== "" && (
+        <center>
+          <h3>You are not logged in! Redirecting to Login...</h3>
         </center>
       )}
 
